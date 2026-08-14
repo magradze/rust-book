@@ -1,126 +1,90 @@
-## Installation
+## ინსტალაცია
 
-The first step is to install Rust. We’ll download Rust through `rustup`, a
-command line tool for managing Rust versions and associated tools. You’ll need
-an internet connection for the download.
+პირველი ნაბიჯი Rust-ის დაინსტალირებაა. Rust-ს ჩამოვტვირთავთ `rustup`-ის მეშვეობით — ეს არის Command Line ინსტრუმენტი Rust-ის ვერსიებისა და მასთან დაკავშირებული ინსტრუმენტების მართვისთვის. ჩამოსატვირთად დაგჭირდებათ ინტერნეტ-კავშირი.
 
-> Note: If you prefer not to use `rustup` for some reason, please see the
-> [Other Rust Installation Methods page][otherinstall] for more options.
+> შენიშვნა: თუ რაიმე მიზეზით არ გსურთ `rustup`-ის გამოყენება, გთხოვთ იხილოთ [Rust-ის ინსტალაციის სხვა მეთოდების გვერდი][otherinstall] დამატებითი ოფციებისთვის.
 
-The following steps install the latest stable version of the Rust compiler.
-Rust’s stability guarantees ensure that all the examples in the book that
-compile will continue to compile with newer Rust versions. The output might
-differ slightly between versions because Rust often improves error messages and
-warnings. In other words, any newer, stable version of Rust you install using
-these steps should work as expected with the content of this book.
+შემდეგი ნაბიჯები დააინსტალირებს Rust-ის კომპილატორის უახლეს სტაბილურ ვერსიას. Rust-ის სტაბილურობის გარანტიები უზრუნველყოფს იმას, რომ წიგნში მოყვანილი ყველა მაგალითი, რომელიც კომპილირდება, გააგრძელებს კომპილაციას Rust-ის უფრო ახალ ვერსიებზეც. გამონატანი (output) შეიძლება ოდნავ განსხვავდებოდეს ვერსიებს შორის, რადგან Rust-ი ხშირად აუმჯობესებს შეცდომების შეტყობინებებსა და გაფრთხილებებს (warnings). სხვა სიტყვებით რომ ვთქვათ, Rust-ის ნებისმიერი უფრო ახალი, სტაბილური ვერსია, რომელსაც ამ ნაბიჯებით დააინსტალირებთ, იმუშავებს ისე, როგორც მოსალოდნელია ამ წიგნის შინაარსთან.
 
-> ### Command Line Notation
+> ### Command Line ნოტაცია
 >
-> In this chapter and throughout the book, we’ll show some commands used in the
-> terminal. Lines that you should enter in a terminal all start with `$`. You
-> don’t need to type the `$` character; it’s the command line prompt shown to
-> indicate the start of each command. Lines that don’t start with `$` typically
-> show the output of the previous command. Additionally, PowerShell-specific
-> examples will use `>` rather than `$`.
+> ამ თავში და მთელ წიგნში, ჩვენ ვანახებთ ტერმინალში გამოყენებულ ზოგად ბრძანებებს. სტრიქონები, რომლებიც ტერმინალში უნდა შეიყვანოთ, იწყება `$` სიმბოლოთი. `$` სიმბოლოს აკრეფა არ გჭირდებათ; ის არის Command Line prompt-ი, რომელიც თითოეული ბრძანების დასაწყისს მიუთითებს. სტრიქონები, რომლებიც არ იწყება `$`-ით, ჩვეულებრივ აჩვენებს წინა ბრძანების გამონატანს. გარდა ამისა, PowerShell-ის სპეციფიკური მაგალითები `$`-ის ნაცვლად გამოიყენებს `>`-ს.
 
-### Installing `rustup` on Linux or macOS
+### `rustup`-ის ინსტალაცია Linux-ზე ან macOS-ზე
 
-If you’re using Linux or macOS, open a terminal and enter the following command:
+თუ იყენებთ Linux-ს ან macOS-ს, გახსენით ტერმინალი და შეიყვანეთ შემდეგი ბრძანება:
 
 ```console
 $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
-The command downloads a script and starts the installation of the `rustup`
-tool, which installs the latest stable version of Rust. You might be prompted
-for your password. If the install is successful, the following line will appear:
+ბრძანება ჩამოტვირთავს სკრიპტს და დაიწყებს `rustup` ინსტრუმენტის ინსტალაციას, რომელიც დააინსტალირებს Rust-ის უახლეს სტაბილურ ვერსიას. შეიძლება მოგეთხოვოთ თქვენი პაროლი. თუ ინსტალაცია წარმატებით დასრულდა, გამოჩნდება შემდეგი სტრიქონი:
 
 ```text
 Rust is installed now. Great!
 ```
 
-You will also need a _linker_, which is a program that Rust uses to join its
-compiled outputs into one file. It is likely you already have one. If you get
-linker errors, you should install a C compiler, which will typically include a
-linker. A C compiler is also useful because some common Rust packages depend on
-C code and will need a C compiler.
+ასევე დაგჭირდებათ _ლინკერი_ (linker) — პროგრამა, რომელსაც Rust-ი იყენებს თავისი დაკომპილირებული გამონატანის ერთ ფაილში გასაერთიანებლად. სავარაუდოა, რომ ის უკვე გაქვთ. თუ მიიღებთ ლინკერის შეცდომებს, უნდა დააინსტალიროთ C კომპილატორი, რომელიც ჩვეულებრივ მოიცავს ლინკერსაც. C კომპილატორი ასევე სასარგებლოა, რადგან Rust-ის ზოგიერთი გავრცელებული პაკეტი დამოკიდებულია C კოდზე და დასჭირდება C კომპილატორი.
 
-On macOS, you can get a C compiler by running:
+macOS-ზე C კომპილატორის მიღება შეგიძლიათ შემდეგი ბრძანების გაშვებით:
 
 ```console
 $ xcode-select --install
 ```
 
-Linux users should generally install GCC or Clang, according to their
-distribution’s documentation. For example, if you use Ubuntu, you can install
-the `build-essential` package.
+Linux-ის მომხმარებლებმა, როგორც წესი, უნდა დააინსტალირონ GCC ან Clang, თავიანთი დისტრიბუციის დოკუმენტაციის შესაბამისად. მაგალითად, თუ იყენებთ Ubuntu-ს, შეგიძლიათ დააინსტალიროთ `build-essential` პაკეტი.
 
-### Installing `rustup` on Windows
+### `rustup`-ის ინსტალაცია Windows-ზე
 
-On Windows, go to [https://www.rust-lang.org/tools/install][install]<!-- ignore
---> and follow the instructions for installing Rust. At some point in the
-installation, you’ll be prompted to install Visual Studio. This provides a
-linker and the native libraries needed to compile programs. If you need more
-help with this step, see
-[https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc]<!--
-ignore -->.
+Windows-ზე გადადით მისამართზე [https://www.rust-lang.org/tools/install][install]<!-- ignore --> და მიჰყევით Rust-ის ინსტალაციის ინსტრუქციას. ინსტალაციის გარკვეულ ეტაპზე მოგეთხოვებათ Visual Studio-ს ინსტალაცია. ეს უზრუნველყოფს ლინკერსა და ნატიურ ბიბლიოთეკებს, რომლებიც საჭიროა პროგრამების კომპილაციისთვის. თუ გჭირდებათ დამატებითი დახმარება ამ ნაბიჯისთვის, იხილეთ [https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc]<!-- ignore -->.
 
-The rest of this book uses commands that work in both _cmd.exe_ and PowerShell.
-If there are specific differences, we’ll explain which to use.
+ამ წიგნის დანარჩენი ნაწილი იყენებს ბრძანებებს, რომლებიც მუშაობს როგორც _cmd.exe_-ში, ასევე PowerShell-ში. თუ იქნება კონკრეტული განსხვავებები, ავხსნით რომლის გამოყენებაა საჭირო.
 
-### Troubleshooting
+### პრობლემების აღმოფხვრა (Troubleshooting)
 
-To check whether you have Rust installed correctly, open a shell and enter this
-line:
+იმის შესამოწმებლად, სწორად გაქვთ თუ არა დაინსტალირებული Rust-ი, გახსენით ტერმინალი (shell) და შეიყვანეთ ეს სტრიქონი:
 
 ```console
 $ rustc --version
 ```
 
-You should see the version number, commit hash, and commit date for the latest
-stable version that has been released, in the following format:
+თქვენ უნდა დაინახოთ უახლესი სტაბილური გამოშვებული ვერსიის ნომერი, commit hash და commit თარიღი შემდეგ ფორმატში:
 
 ```text
 rustc x.y.z (abcabcabc yyyy-mm-dd)
 ```
 
-If you see this information, you have installed Rust successfully! If you don’t
-see this information, check that Rust is in your `%PATH%` system variable as
-follows.
+თუ ხედავთ ამ ინფორმაციას, Rust-ი წარმატებით დაგიინსტალირებიათ! თუ ვერ ხედავთ ამ ინფორმაციას, შეამოწმეთ, არის თუ არა Rust-ი თქვენს `%PATH%` სისტემურ ცვლადში შემდეგნაირად.
 
-In Windows CMD, use:
+Windows CMD-ში გამოიყენეთ:
 
 ```console
 > echo %PATH%
 ```
 
-In PowerShell, use:
+PowerShell-ში გამოიყენეთ:
 
 ```powershell
 > echo $env:Path
 ```
 
-In Linux and macOS, use:
+Linux-სა და macOS-ზე გამოიყენეთ:
 
 ```console
 $ echo $PATH
 ```
 
-If that’s all correct and Rust still isn’t working, there are a number of
-places you can get help. Find out how to get in touch with other Rustaceans (a
-silly nickname we call ourselves) on [the community page][community].
+თუ ყველაფერი სწორია და Rust-ი მაინც არ მუშაობს, არის რამდენიმე ადგილი, სადაც შეგიძლიათ მიიღოთ დახმარება. გაიგეთ, როგორ დაუკავშირდეთ სხვა Rustacean-ებს (ასე ვუწოდებთ საკუთარ თავს) [საზოგადოების გვერდზე][community].
 
-### Updating and Uninstalling
+### განახლება და დეინსტალაცია
 
-Once Rust is installed via `rustup`, updating to a newly released version is
-easy. From your shell, run the following update script:
+მას შემდეგ, რაც Rust-ი დაინსტალირდება `rustup`-ის მეშვეობით, ახალ გამოშვებულ ვერსიაზე განახლება მარტივია. თქვენი ტერმინალიდან გაუშვით შემდეგი განახლების სკრიპტი:
 
 ```console
 $ rustup update
 ```
 
-To uninstall Rust and `rustup`, run the following uninstall script from your
-shell:
+Rust-ისა და `rustup`-ის დეინსტალაციისთვის, გაუშვით შემდეგი დეინსტალაციის სკრიპტი თქვენი ტერმინალიდან:
 
 ```console
 $ rustup self uninstall
@@ -129,34 +93,22 @@ $ rustup self uninstall
 <!-- Old headings. Do not remove or links may break. -->
 <a id="local-documentation"></a>
 
-### Reading the Local Documentation
+### ლოკალური დოკუმენტაციის წაკითხვა
 
-The installation of Rust also includes a local copy of the documentation so
-that you can read it offline. Run `rustup doc` to open the local documentation
-in your browser.
+Rust-ის ინსტალაცია ასევე მოიცავს დოკუმენტაციის ლოკალურ ასლს, რათა შეძლოთ მისი ოფლაინში წაკითხვა. გაუშვით `rustup doc`, რათა გახსნათ ლოკალური დოკუმენტაცია თქვენს ბრაუზერში.
 
-Any time a type or function is provided by the standard library and you’re not
-sure what it does or how to use it, use the application programming interface
-(API) documentation to find out!
+ნებისმიერ დროს, როდესაც ტიპი ან ფუნქცია მოწოდებულია სტანდარტული ბიბლიოთეკის მიერ და არ ხართ დარწმუნებული, რას აკეთებს ის ან როგორ გამოიყენოთ, გამოიყენეთ პროგრამული ინტერფეისის (API) დოკუმენტაცია მის გასაგებად!
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="text-editors-and-integrated-development-environments"></a>
 
-### Using Text Editors and IDEs
+### ტექსტური რედაქტორებისა და IDE-ების გამოყენება
 
-This book makes no assumptions about what tools you use to author Rust code.
-Just about any text editor will get the job done! However, many text editors and
-integrated development environments (IDEs) have built-in support for Rust. You
-can always find a fairly current list of many editors and IDEs on [the tools
-page][tools] on the Rust website.
+ეს წიგნი არ აკეთებს დაშვებებს იმის შესახებ, თუ რომელ ინსტრუმენტებს იყენებთ Rust-ის კოდის დასაწერად. თითქმის ნებისმიერი ტექსტური რედაქტორი გაართმევს თავს ამ ამოცანას! თუმცა, ბევრ ტექსტურ რედაქტორსა და ინტეგრირებულ დეველოპერულ გარემოს (IDE) აქვს Rust-ის ჩაშენებული მხარდაჭერა. თქვენ ყოველთვის შეგიძლიათ იპოვოთ მრავალი რედაქტორისა და IDE-ს საკმაოდ განახლებული სია Rust-ის ვებ-საიტის [ინსტრუმენტების გვერდზე][tools].
 
-### Working Offline with This Book
+### ამ წიგნთან ოფლაინ რეჟიმში მუშაობა
 
-In several examples, we will use Rust packages beyond the standard library. To
-work through those examples, you will either need to have an internet connection
-or to have downloaded those dependencies ahead of time. To download the
-dependencies ahead of time, you can run the following commands. (We’ll explain
-what `cargo` is and what each of these commands does in detail later.)
+რამდენიმე მაგალითში ჩვენ გამოვიყენებთ Rust-ის პაკეტებს სტანდარტული ბიბლიოთეკის მიღმა. ამ მაგალითებზე სამუშაოდ, დაგჭირდებათ ინტერნეტ-კავშირი ან ამ დამოკიდებულებების წინასწარ ჩამოტვირთვა. დამოკიდებულებების წინასწარ ჩამოსატვირთად, შეგიძლიათ გაუშვათ შემდეგი ბრძანებები. (მოგვიანებით დეტალურად ავხსნით, რა არის `cargo` და რას აკეთებს თითოეული ეს ბრძანება.)
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -172,11 +124,7 @@ $ cd get-dependencies
 $ cargo add rand@0.10.1 trpl@0.2.0
 ```
 
-This will cache the downloads for these packages so you will not need to
-download them later. Once you have run this command, you do not need to keep the
-`get-dependencies` folder. If you have run this command, you can use the
-`--offline` flag with all `cargo` commands in the rest of the book to use these
-cached versions instead of attempting to use the network.
+ეს დააქეშებს (cache) ამ პაკეტების ჩამოტვირთვებს, ასე რომ მოგვიანებით მათი ჩამოტვირთვა არ დაგჭირდებათ. ამ ბრძანების გაშვების შემდეგ, `get-dependencies` საქაღალდის შენარჩუნება აღარ გჭირდებათ. თუ გაუშვით ეს ბრძანება, შეგიძლიათ გამოიყენოთ `--offline` დროშა (flag) `cargo`-ს ყველა ბრძანებასთან ერთად წიგნის დანარჩენ ნაწილში, რათა გამოიყენოთ ეს ქეშირებული ვერსიები ქსელის გამოყენების მცდელობის ნაცვლად.
 
 [otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
 [install]: https://www.rust-lang.org/tools/install
