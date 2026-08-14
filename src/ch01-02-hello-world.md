@@ -1,31 +1,19 @@
 ## Hello, World!
 
-Now that you’ve installed Rust, it’s time to write your first Rust program.
-It’s traditional when learning a new language to write a little program that
-prints the text `Hello, world!` to the screen, so we’ll do the same here!
+ახლა, როცა Rust-ი დააინსტალირეთ, დროა დაწეროთ თქვენი პირველი Rust პროგრამა. ახალი ენის სწავლისას ტრადიციად ითვლება პატარა პროგრამის დაწერა, რომელიც ეკრანზე ბეჭდავს ტექსტს `Hello, world!`, ასე რომ, ჩვენც იგივეს გავაკეთებთ!
 
-> Note: This book assumes basic familiarity with the command line. Rust makes
-> no specific demands about your editing or tooling or where your code lives, so
-> if you prefer to use an IDE instead of the command line, feel free to use your
-> favorite IDE. Many IDEs now have some degree of Rust support; check the IDE’s
-> documentation for details. The Rust team has been focusing on enabling great
-> IDE support via `rust-analyzer`. See [Appendix D][devtools]<!-- ignore -->
-> for more details.
+> შენიშვნა: ეს წიგნი გულისხმობს Command Line-ის ელემენტარულ ცოდნას. Rust-ს არ აქვს სპეციფიკური მოთხოვნები თქვენს რედაქტორზე, ინსტრუმენტებზე ან კოდის ადგილმდებარეობაზე, ასე რომ, თუ Command Line-ის ნაცვლად IDE-ს გამოყენება გირჩევნიათ, შეგიძლიათ გამოიყენოთ თქვენი საყვარელი IDE. ბევრ IDE-ს ახლა აქვს Rust-ის გარკვეული მხარდაჭერა; დეტალებისთვის შეამოწმეთ IDE-ს დოკუმენტაცია. Rust-ის გუნდი ორიენტირებულია IDE-ს შესანიშნავი მხარდაჭერის უზრუნველყოფაზე `rust-analyzer`-ის მეშვეობით. დამატებითი დეტალებისთვის იხილეთ [დანართი D][devtools]<!-- ignore -->.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="creating-a-project-directory"></a>
 
-### Project Directory Setup
+### პროექტის დირექტორიის გამართვა
 
-You’ll start by making a directory to store your Rust code. It doesn’t matter
-to Rust where your code lives, but for the exercises and projects in this book,
-we suggest making a _projects_ directory in your home directory and keeping all
-your projects there.
+დაიწყებთ დირექტორიის შექმნით თქვენი Rust კოდის შესანახად. Rust-ისთვის მნიშვნელობა არ აქვს, სად ინახება კოდი, მაგრამ ამ წიგნში მოცემული სავარჯიშოებისა და პროექტებისთვის გირჩევთ შექმნათ _projects_ დირექტორია თქვენს home დირექტორიაში და ყველა თქვენი პროექტი იქ შეინახოთ.
 
-Open a terminal and enter the following commands to make a _projects_ directory
-and a directory for the “Hello, world!” project within the _projects_ directory.
+გახსენით ტერმინალი და შეიყვანეთ შემდეგი ბრძანებები _projects_ დირექტორიის და მის შიგნით “Hello, world!” პროექტისთვის დირექტორიის შესაქმნელად.
 
-For Linux, macOS, and PowerShell on Windows, enter this:
+Linux-ისთვის, macOS-ისთვის და Windows-ზე PowerShell-ისთვის შეიყვანეთ:
 
 ```console
 $ mkdir ~/projects
@@ -34,7 +22,7 @@ $ mkdir hello_world
 $ cd hello_world
 ```
 
-For Windows CMD, enter this:
+Windows CMD-ისთვის შეიყვანეთ:
 
 ```cmd
 > mkdir "%USERPROFILE%\projects"
@@ -46,16 +34,13 @@ For Windows CMD, enter this:
 <!-- Old headings. Do not remove or links may break. -->
 <a id="writing-and-running-a-rust-program"></a>
 
-### Rust Program Basics
+### Rust პროგრამის საფუძვლები
 
-Next, make a new source file and call it _main.rs_. Rust files always end with
-the _.rs_ extension. If you’re using more than one word in your filename, the
-convention is to use an underscore to separate them. For example, use
-_hello_world.rs_ rather than _helloworld.rs_.
+შემდეგ, შექმენით ახალი საწყისი ფაილი და დაარქვით _main.rs_. Rust-ის ფაილები ყოველთვის მთავრდება _.rs_ გაფართოებით. თუ ფაილის სახელში ერთზე მეტ სიტყვას იყენებთ, მიღებული პრაქტიკაა მათ დასაცილებლად ქვედა ტირეს (underscore) გამოყენება. მაგალითად, გამოიყენეთ _hello_world.rs_ და არა _helloworld.rs_.
 
-Now open the _main.rs_ file you just created and enter the code in Listing 1-1.
+ახლა გახსენით ახლად შექმნილი _main.rs_ ფაილი და შეიყვანეთ კოდი 1-1 ლისტინგში.
 
-<Listing number="1-1" file-name="main.rs" caption="A program that prints `Hello, world!`">
+<Listing number="1-1" file-name="main.rs" caption="პროგრამა, რომელიც ბეჭდავს `Hello, world!`-ს">
 
 ```rust
 fn main() {
@@ -65,9 +50,7 @@ fn main() {
 
 </Listing>
 
-Save the file and go back to your terminal window in the
-_~/projects/hello_world_ directory. On Linux or macOS, enter the following
-commands to compile and run the file:
+შეინახეთ ფაილი და დაუბრუნდით ტერმინალის ფანჯარას _~/projects/hello_world_ დირექტორიაში. Linux-ზე ან macOS-ზე შეიყვანეთ შემდეგი ბრძანებები ფაილის დასაკომპილირებლად და გასაშვებად:
 
 ```console
 $ rustc main.rs
@@ -75,7 +58,7 @@ $ ./main
 Hello, world!
 ```
 
-On Windows, enter the command `.\main` instead of `./main`:
+Windows-ზე შეიყვანეთ ბრძანება `.\main` `./main`-ის ნაცვლად:
 
 ```powershell
 > rustc main.rs
@@ -83,22 +66,17 @@ On Windows, enter the command `.\main` instead of `./main`:
 Hello, world!
 ```
 
-Regardless of your operating system, the string `Hello, world!` should print to
-the terminal. If you don’t see this output, refer back to the
-[“Troubleshooting”][troubleshooting]<!-- ignore --> part of the Installation
-section for ways to get help.
+თქვენი ოპერაციული სისტემის მიუხედავად, ტერმინალში უნდა დაიბეჭდოს სტრიქონი `Hello, world!`. თუ ვერ ხედავთ ამ გამონატანს, დახმარების მისაღებად იხილეთ ინსტალაციის სექციის ["პრობლემების აღმოფხვრის"][troubleshooting]<!-- ignore --> ნაწილი.
 
-If `Hello, world!` did print, congratulations! You’ve officially written a Rust
-program. That makes you a Rust programmer—welcome!
+თუ `Hello, world!` დაიბეჭდა, გილოცავთ! თქვენ ოფიციალურად დაწერეთ Rust პროგრამა. ეს თქვენ გხდით Rust-ის პროგრამისტად — კეთილი იყოს თქვენი მობრძანება!
 
 <!-- Old headings. Do not remove or links may break. -->
 
 <a id="anatomy-of-a-rust-program"></a>
 
-### The Anatomy of a Rust Program
+### Rust პროგრამის ანატომია
 
-Let’s review this “Hello, world!” program in detail. Here’s the first piece of
-the puzzle:
+დეტალურად განვიხილოთ ეს “Hello, world!” პროგრამა. აი, თავსატეხის პირველი ნაწილი:
 
 ```rust
 fn main() {
@@ -106,75 +84,49 @@ fn main() {
 }
 ```
 
-These lines define a function named `main`. The `main` function is special: It
-is always the first code that runs in every executable Rust program. Here, the
-first line declares a function named `main` that has no parameters and returns
-nothing. If there were parameters, they would go inside the parentheses (`()`).
+ეს სტრიქონები განსაზღვრავს ფუნქციას, სახელად `main`. `main` ფუნქცია განსაკუთრებულია: ის ყოველთვის არის პირველი კოდი, რომელიც იშვება Rust-ის თითოეულ შესრულებად (executable) პროგრამაში. აქ პირველი სტრიქონი აცხადებს `main` ფუნქციას, რომელსაც არ აქვს პარამეტრები და არაფერს აბრუნებს. პარამეტრები რომ ყოფილიყო, ისინი ფრჩხილების (`()`) შიგნით მოთავსდებოდა.
 
-The function body is wrapped in `{}`. Rust requires curly brackets around all
-function bodies. It’s good style to place the opening curly bracket on the same
-line as the function declaration, adding one space in between.
+ფუნქციის ტანი მოქცეულია `{}` ფრჩხილებში. Rust-ი მოითხოვს ფიგურულ ფრჩხილებს ფუნქციის ყველა ტანის გარშემო. კარგი სტილია გამხსნელი ფიგურული ფრჩხილის იმავე სტრიქონზე განთავსება, სადაც ფუნქციის დეკლარაციაა, მათ შორის ერთი დაშორების (space) დამატებით.
 
-> Note: If you want to stick to a standard style across Rust projects, you can
-> use an automatic formatter tool called `rustfmt` to format your code in a
-> particular style (more on `rustfmt` in
-> [Appendix D][devtools]<!-- ignore -->). The Rust team has included this tool
-> with the standard Rust distribution, as `rustc` is, so it should already be
-> installed on your computer!
+> შენიშვნა: თუ გსურთ დაიცვათ სტანდარტული სტილი Rust პროექტებში, შეგიძლიათ გამოიყენოთ ავტომატური ფორმატირების ინსტრუმენტი `rustfmt`, რათა დააფორმატოთ თქვენი კოდი გარკვეულ სტილში (მეტი `rustfmt`-ის შესახებ [დანართ D-ში][devtools]<!-- ignore -->). Rust-ის გუნდმა ეს ინსტრუმენტი მოაყოლა Rust-ის სტანდარტულ დისტრიბუციას, ისევე როგორც `rustc`, ასე რომ ის უკვე დაინსტალირებული უნდა იყოს თქვენს კომპიუტერზე!
 
-The body of the `main` function holds the following code:
+`main` ფუნქციის ტანი შეიცავს შემდეგ კოდს:
 
 ```rust
 println!("Hello, world!");
 ```
 
-This line does all the work in this little program: It prints text to the
-screen. There are three important details to notice here.
+ეს სტრიქონი ასრულებს მთელ სამუშაოს ამ პატარა პროგრამაში: ის ბეჭდავს ტექსტს ეკრანზე. აქ არის სამი მნიშვნელოვანი დეტალი, რომელსაც ყურადღება უნდა მიაქციოთ.
 
-First, `println!` calls a Rust macro. If it had called a function instead, it
-would be entered as `println` (without the `!`). Rust macros are a way to write
-code that generates code to extend Rust syntax, and we’ll discuss them in more
-detail in [Chapter 20][ch20-macros]<!-- ignore -->. For now, you just need to
-know that using a `!` means that you’re calling a macro instead of a normal
-function and that macros don’t always follow the same rules as functions.
+პირველი, `println!` იძახებს Rust-ის მაკროსს. ფუნქცია რომ გამოეძახა, ჩაწერილი იქნებოდა როგორც `println` (`!`-ის გარეშე). Rust-ის მაკროსები არის კოდის დაწერის გზა, რომელიც აგენერირებს კოდს Rust-ის სინტაქსის გასაფართოებლად, და მათ უფრო დეტალურად განვიხილავთ [მე-20 თავში][ch20-macros]<!-- ignore -->. ახლა მხოლოდ ის უნდა იცოდეთ, რომ `!` სიმბოლოს გამოყენება ნიშნავს, რომ იძახებთ მაკროსს ჩვეულებრივი ფუნქციის ნაცვლად, და რომ მაკროსები ყოველთვის არ მიჰყვებიან იმავე წესებს, რასაც ფუნქციები.
 
-Second, you see the `"Hello, world!"` string. We pass this string as an argument
-to `println!`, and the string is printed to the screen.
+მეორე, ხედავთ `"Hello, world!"` სტრიქონს (string). ჩვენ ამ სტრიქონს გადავცემთ არგუმენტად `println!`-ს, და ეს სტრიქონი იბეჭდება ეკრანზე.
 
-Third, we end the line with a semicolon (`;`), which indicates that this
-expression is over, and the next one is ready to begin. Most lines of Rust code
-end with a semicolon.
+მესამე, სტრიქონს ვასრულებთ წერტილ-მძიმით (`;`), რაც მიუთითებს, რომ ეს გამოსახულება დასრულდა და შემდეგი მზად არის დასაწყებად. Rust-ის კოდის სტრიქონების უმეტესობა წერტილ-მძიმით მთავრდება.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="compiling-and-running-are-separate-steps"></a>
 
-### Compilation and Execution
+### კომპილაცია და გაშვება
 
-You’ve just run a newly created program, so let’s examine each step in the
-process.
+თქვენ ახლახან გაუშვით ახლად შექმნილი პროგრამა, ასე რომ განვიხილოთ პროცესის თითოეული ნაბიჯი.
 
-Before running a Rust program, you must compile it using the Rust compiler by
-entering the `rustc` command and passing it the name of your source file, like
-this:
+Rust პროგრამის გაშვებამდე, ის უნდა დააკომპილიროთ Rust-ის კომპილატორის გამოყენებით `rustc` ბრძანების შეყვანით და მასზე თქვენი საწყისი ფაილის სახელის გადაცემით, ასე:
 
 ```console
 $ rustc main.rs
 ```
 
-If you have a C or C++ background, you’ll notice that this is similar to `gcc`
-or `clang`. After compiling successfully, Rust outputs a binary executable.
+თუ გაქვთ C ან C++ გამოცდილება, შეამჩნევთ, რომ ეს წააგავს `gcc`-ს ან `clang`-ს. წარმატებული კომპილაციის შემდეგ, Rust-ი გამოიტანს ბინარულ შესრულებად (executable) ფაილს.
 
-On Linux, macOS, and PowerShell on Windows, you can see the executable by
-entering the `ls` command in your shell:
+Linux-ზე, macOS-ზე და Windows-ზე PowerShell-ში შეგიძლიათ ნახოთ შესრულებადი ფაილი ტერმინალში `ls` ბრძანების შეყვანით:
 
 ```console
 $ ls
 main  main.rs
 ```
 
-On Linux and macOS, you’ll see two files. With PowerShell on Windows, you’ll
-see the same three files that you would see using CMD. With CMD on Windows, you
-would enter the following:
+Linux-სა და macOS-ზე დაინახავთ ორ ფაილს. Windows-ზე PowerShell-ით დაინახავთ იმავე სამ ფაილს, რასაც დაინახავდით CMD-ის გამოყენებით. Windows-ზე CMD-ით შეიყვანდით შემდეგს:
 
 ```cmd
 > dir /B %= the /B option says to only show the file names =%
@@ -183,31 +135,17 @@ main.pdb
 main.rs
 ```
 
-This shows the source code file with the _.rs_ extension, the executable file
-(_main.exe_ on Windows, but _main_ on all other platforms), and, when using
-Windows, a file containing debugging information with the _.pdb_ extension.
-From here, you run the _main_ or _main.exe_ file, like this:
+ეს აჩვენებს საწყისი კოდის ფაილს _.rs_ გაფართოებით, შესრულებად ფაილს (_main.exe_ Windows-ზე, ხოლო _main_ ყველა სხვა პლატფორმაზე) და Windows-ის გამოყენებისას დებაგინგის ინფორმაციის შემცველ ფაილს _.pdb_ გაფართოებით. აქედან, თქვენ გაუშვებთ _main_ ან _main.exe_ ფაილს, ასე:
 
 ```console
 $ ./main # or .\main on Windows
 ```
 
-If your _main.rs_ is your “Hello, world!” program, this line prints `Hello,
-world!` to your terminal.
+თუ თქვენი _main.rs_ არის თქვენი “Hello, world!” პროგრამა, ეს სტრიქონი ბეჭდავს `Hello, world!`-ს თქვენს ტერმინალში.
 
-If you’re more familiar with a dynamic language, such as Ruby, Python, or
-JavaScript, you might not be used to compiling and running a program as
-separate steps. Rust is an _ahead-of-time compiled_ language, meaning you can
-compile a program and give the executable to someone else, and they can run it
-even without having Rust installed. If you give someone a _.rb_, _.py_, or
-_.js_ file, they need to have a Ruby, Python, or JavaScript implementation
-installed (respectively). But in those languages, you only need one command to
-compile and run your program. Everything is a trade-off in language design.
+თუ უფრო იცნობთ დინამიკურ ენებს, როგორიცაა Ruby, Python ან JavaScript, შეიძლება არ იყოთ ჩვეული პროგრამის კომპილაციასა და გაშვებას, როგორც ცალკეულ ნაბიჯებს. Rust-ი არის წინასწარ კომპილირებადი (ahead-of-time compiled) ენა, რაც ნიშნავს, რომ შეგიძლიათ დააკომპილიროთ პროგრამა და მისცეთ შესრულებადი ფაილი სხვას, და მათ შეეძლებათ მისი გაშვება Rust-ის დაინსტალირების გარეშეც კი. თუ ვინმეს მისცემთ _.rb_, _.py_ ან _.js_ ფაილს, მათ დასჭირდებათ შესაბამისად Ruby, Python ან JavaScript იმპლემენტაციის დაინსტალირება. თუმცა ამ ენებში გჭირდებათ მხოლოდ ერთი ბრძანება თქვენი პროგრამის დასაკომპილირებლად და გასაშვებად. ენების დიზაინში ყველაფერი კომპრომისია.
 
-Just compiling with `rustc` is fine for simple programs, but as your project
-grows, you’ll want to manage all the options and make it easy to share your
-code. Next, we’ll introduce you to the Cargo tool, which will help you write
-real-world Rust programs.
+უბრალოდ `rustc`-ით კომპილაცია კარგია მარტივი პროგრამებისთვის, მაგრამ თქვენი პროექტის ზრდასთან ერთად, მოგინდებათ ყველა ოფციის მართვა და თქვენი კოდის მარტივად გაზიარება. შემდეგში გაგაცნობთ Cargo ინსტრუმენტს, რომელიც დაგეხმარებათ რეალური Rust პროგრამების დაწერაში.
 
 [troubleshooting]: ch01-01-installation.html#troubleshooting
 [devtools]: appendix-04-useful-development-tools.html
