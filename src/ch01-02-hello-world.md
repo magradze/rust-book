@@ -33,6 +33,7 @@ Windows CMD-ისთვის შეიყვანეთ:
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="writing-and-running-a-rust-program"></a>
+<a id="rust-program-basics"></a>
 
 ### Rust პროგრამის საფუძვლები
 
