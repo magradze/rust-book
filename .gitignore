@@ -2,8 +2,11 @@ book/
 *~
 .idea
 .DS_Store
-target
-tmp
+target/
+**/target/
+tmp/
+linkcheck*
+linkchecker/
 
 .nova
 .vscode
