@@ -1,30 +1,18 @@
-# The Rust Programming Language
+# პროგრამირების ენა Rust
 
-_by Steve Klabnik, Carol Nichols, and Chris Krycho, with contributions from the
-Rust Community_
+_სტივ კლაბნიკის, კეროლ ნიკოლსის და კრის კრიხოს მიერ, Rust საზოგადოების წვლილით_
 
-This version of the text assumes you’re using Rust 1.97.0 (released 2026-07-09)
-or later with `edition = "2024"` in the *Cargo.toml* file of all projects to
-configure them to use Rust 2024 Edition idioms. See the [“Installation” section
-of Chapter 1][install]<!-- ignore --> for instructions on installing or
-updating Rust, and see [Appendix E][appendix-e]<!-- ignore --> for information
-on editions.
+ტექსტის ეს ვერსია გულისხმობს, რომ იყენებთ Rust 1.97.0-ს (გამოშვებული 2026-07-09) ან უფრო ახალს, ყველა პროექტის _Cargo.toml_ ფაილში `edition = "2024"` პარამეტრით, რათა მათ გამოიყენონ Rust 2024 Edition-ის იდიომები. იხილეთ [1-ლი თავის "ინსტალაციის" სექცია][install]<!-- ignore --> Rust-ის დაინსტალირების ან განახლების ინსტრუქციებისთვის, ხოლო გამოცემების შესახებ ინფორმაციისთვის იხილეთ [დანართი E][appendix-e]<!-- ignore -->.
 
-The HTML format is available online at
-[https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/)
-and offline with installations of Rust made with `rustup`; run `rustup doc
---book` to open.
+HTML ფორმატი ხელმისაწვდომია ონლაინ [https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/) მისამართზე, ხოლო ოფლაინში — `rustup`-ით დაინსტალირებულ Rust-თან ერთად; გასახსნელად გაუშვით `rustup doc --book`.
 
-Several community [translations] are also available.
+ასევე ხელმისაწვდომია საზოგადოების მიერ შექმნილი რამდენიმე [თარგმანი][translations].
 
-This text is available in [paperback and ebook format from No Starch
-Press][nsprust].
+ეს ტექსტი ხელმისაწვდომია [ბეჭდური და ელექტრონული წიგნის ფორმატში No Starch Press-ისგან][nsprust].
 
 [install]: ch01-01-installation.html
 [appendix-e]: appendix-05-editions.html
 [nsprust]: https://nostarch.com/rust-programming-language-3rd-edition
 [translations]: appendix-06-translation.html
 
-> **🚨 Want a more interactive learning experience? Try out a different version
-> of the Rust Book, featuring: quizzes, highlighting, visualizations, and
-> more**: <https://rust-book.cs.brown.edu>
+> **🚨 გსურთ უფრო ინტერაქტიული სწავლის გამოცდილება? სცადეთ Rust Book-ის განსხვავებული ვერსია, რომელიც მოიცავს: ქვიზებს, ჰაილაითინგს, ვიზუალიზაციებს და მეტს**: <https://rust-book.cs.brown.edu>
