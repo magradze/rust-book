@@ -270,6 +270,7 @@
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="ინსტალაცია-1"><a href="#ინსტალაცია-1" class="header">ინსტალაცია</a></h1>
+<p><a id="installation"></a></p>
 <h2 id="ინსტალაცია"><a class="header" href="#ინსტალაცია">ინსტალაცია</a></h2>
 <p>პირველი ნაბიჯი Rust-ის დაინსტალირებაა. Rust-ს ჩამოვტვირთავთ <code>rustup</code>-ის მეშვეობით — ეს არის Command Line ინსტრუმენტი Rust-ის ვერსიებისა და მასთან დაკავშირებული ინსტრუმენტების მართვისთვის. ჩამოსატვირთად დაგჭირდებათ ინტერნეტ-კავშირი.</p>
 <blockquote>
@@ -295,6 +296,7 @@
 <h3 id="rustup-ის-ინსტალაცია-windows-ზე"><a class="header" href="#rustup-ის-ინსტალაცია-windows-ზე"><code>rustup</code>-ის ინსტალაცია Windows-ზე</a></h3>
 <p>Windows-ზე გადადით მისამართზე <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a><!-- ignore --> და მიჰყევით Rust-ის ინსტალაციის ინსტრუქციას. ინსტალაციის გარკვეულ ეტაპზე მოგეთხოვებათ Visual Studio-ს ინსტალაცია. ეს უზრუნველყოფს ლინკერსა და ნატიურ ბიბლიოთეკებს, რომლებიც საჭიროა პროგრამების კომპილაციისთვის. თუ გჭირდებათ დამატებითი დახმარება ამ ნაბიჯისთვის, იხილეთ <a href="https://rust-lang.github.io/rustup/installation/windows-msvc.html">https://rust-lang.github.io/rustup/installation/windows-msvc.html</a><!-- ignore -->.</p>
 <p>ამ წიგნის დანარჩენი ნაწილი იყენებს ბრძანებებს, რომლებიც მუშაობს როგორც <em>cmd.exe</em>-ში, ასევე PowerShell-ში. თუ იქნება კონკრეტული განსხვავებები, ავხსნით რომლის გამოყენებაა საჭირო.</p>
+<p><a id="troubleshooting"></a></p>
 <h3 id="პრობლემების-აღმოფხვრა-troubleshooting"><a class="header" href="#პრობლემების-აღმოფხვრა-troubleshooting">პრობლემების აღმოფხვრა (Troubleshooting)</a></h3>
 <p>იმის შესამოწმებლად, სწორად გაქვთ თუ არა დაინსტალირებული Rust-ი, გახსენით ტერმინალი (shell) და შეიყვანეთ ეს სტრიქონი:</p>
 <pre><code class="language-console">$ rustc --version
@@ -368,7 +370,8 @@ $ cd hello_world
 &gt; cd hello_world
 </code></pre>
 <!-- Old headings. Do not remove or links may break. -->
-<p><a id="writing-and-running-a-rust-program"></a></p>
+<p><a id="writing-and-running-a-rust-program"></a>
+<a id="rust-program-basics"></a></p>
 <h3 id="rust-პროგრამის-საფუძვლები"><a class="header" href="#rust-პროგრამის-საფუძვლები">Rust პროგრამის საფუძვლები</a></h3>
 <p>შემდეგ, შექმენით ახალი საწყისი ფაილი და დაარქვით <em>main.rs</em>. Rust-ის ფაილები ყოველთვის მთავრდება <em>.rs</em> გაფართოებით. თუ ფაილის სახელში ერთზე მეტ სიტყვას იყენებთ, მიღებული პრაქტიკაა მათ დასაცილებლად ქვედა ტირეს (underscore) გამოყენება. მაგალითად, გამოიყენეთ <em>hello_world.rs</em> და არა <em>helloworld.rs</em>.</p>
 <p>ახლა გახსენით ახლად შექმნილი <em>main.rs</em> ფაილი და შეიყვანეთ კოდი 1-1 ლისტინგში.</p>
