@@ -1,64 +1,37 @@
-## Hello, Cargo!
+## Hello, Cargo
 
-Cargo is Rust’s build system and package manager. Most Rustaceans use this tool
-to manage their Rust projects because Cargo handles a lot of tasks for you,
-such as building your code, downloading the libraries your code depends on, and
-building those libraries. (We call the libraries that your code needs
-_dependencies_.)
+Cargo არის Rust-ის build სისტემა და პაკეტების მენეჯერი (package manager). Rustacean-ების უმეტესობა იყენებს ამ ინსტრუმენტს თავისი Rust პროექტების მართვისთვის, რადგან Cargo თქვენ ნაცვლად ასრულებს უამრავ ამოცანას, როგორიცაა თქვენი კოდის build-ი, იმ ბიბლიოთეკების ჩამოტვირთვა, რომლებზეც თქვენი კოდია დამოკიდებული, და ამ ბიბლიოთეკების build-ი. (ბიბლიოთეკებს, რომლებიც თქვენს კოდს სჭირდება, _დამოკიდებულებებს_ (dependencies) ვუწოდებთ.)
 
-The simplest Rust programs, like the one we’ve written so far, don’t have any
-dependencies. If we had built the “Hello, world!” project with Cargo, it would
-only use the part of Cargo that handles building your code. As you write more
-complex Rust programs, you’ll add dependencies, and if you start a project
-using Cargo, adding dependencies will be much easier to do.
+ყველაზე მარტივ Rust პროგრამებს, როგორიც აქამდე დავწერეთ, არ აქვთ დამოკიდებულებები. “Hello, world!” პროექტი Cargo-თი რომ აგვეშენებინა, ის გამოიყენებდა Cargo-ს მხოლოდ იმ ნაწილს, რომელიც კოდის build-ს განაგებს. უფრო რთული Rust პროგრამების წერისას თქვენ დაამატებთ დამოკიდებულებებს, და თუ პროექტს Cargo-ს გამოყენებით დაიწყებთ, დამოკიდებულებების დამატება ბევრად უფრო მარტივი იქნება.
 
-Because the vast majority of Rust projects use Cargo, the rest of this book
-assumes that you’re using Cargo too. Cargo comes installed with Rust if you
-used the official installers discussed in the
-[“Installation”][installation]<!-- ignore --> section. If you installed Rust
-through some other means, check whether Cargo is installed by entering the
-following in your terminal:
+რადგან Rust პროექტების აბსოლუტური უმრავლესობა იყენებს Cargo-ს, ამ წიგნის დანარჩენი ნაწილი გულისხმობს, რომ თქვენც Cargo-ს იყენებთ. Cargo Rust-თან ერთად მოჰყვება, თუ გამოიყენეთ ოფიციალური ინსტალატორები, რომლებიც განხილულია ["ინსტალაციის"][installation]<!-- ignore --> სექციაში. თუ Rust-ი სხვა საშუალებით დააინსტალირეთ, შეამოწმეთ, არის თუ არა Cargo დაინსტალირებული თქვენს ტერმინალში შემდეგის შეყვანით:
 
 ```console
-$ cargo --version
+cargo --version
 ```
 
-If you see a version number, you have it! If you see an error, such as `command
-not found`, look at the documentation for your method of installation to
-determine how to install Cargo separately.
+თუ ხედავთ ვერსიის ნომერს, ის უკვე გაქვთ! თუ ხედავთ შეცდომას, როგორიცაა `command not found`, იხილეთ თქვენი ინსტალაციის მეთოდის დოკუმენტაცია, რათა დაადგინოთ, როგორ დააინსტალიროთ Cargo ცალკე.
 
-### Creating a Project with Cargo
+### პროექტის შექმნა Cargo-ს მეშვეობით
 
-Let’s create a new project using Cargo and look at how it differs from our
-original “Hello, world!” project. Navigate back to your _projects_ directory
-(or wherever you decided to store your code). Then, on any operating system,
-run the following:
+შევქმნათ ახალი პროექტი Cargo-ს გამოყენებით და ვნახოთ, ეს ეტაპი განსხვავდება ჩვენი თავდაპირველი “Hello, world!” პროექტისგან. დაბრუნდით თქვენს _projects_ დირექტორიაში (ან სადაც გადაწყვიტეთ თქვენი კოდის შენახვა). შემდეგ, ნებისმიერ ოპერაციულ სისტემაზე, გაუშვით შემდეგი:
 
 ```console
-$ cargo new hello_cargo
-$ cd hello_cargo
+cargo new hello_cargo
+cd hello_cargo
 ```
 
-The first command creates a new directory and project called _hello_cargo_.
-We’ve named our project _hello_cargo_, and Cargo creates its files in a
-directory of the same name.
+პირველი ბრძანება ქმნის ახალ დირექტორიას და პროექტს სახელად _hello_cargo_. ჩვენს პროექტს დავარქვით _hello_cargo_, და Cargo ქმნის თავის ფაილებს იმავე სახელწოდების დირექტორიაში.
 
-Go into the _hello_cargo_ directory and list the files. You’ll see that Cargo
-has generated two files and one directory for us: a _Cargo.toml_ file and a
-_src_ directory with a _main.rs_ file inside.
+შედით _hello_cargo_ დირექტორიაში და ჩამოთვალეთ ფაილები. დაინახავთ, რომ Cargo-მ ჩვენთვის დააგენერირა ორი ფაილი და ერთი დირექტორია: _Cargo.toml_ ფაილი და _src_ დირექტორია მის შიგნით არსებული _main.rs_ ფაილით.
 
-It has also initialized a new Git repository along with a _.gitignore_ file.
-Git files won’t be generated if you run `cargo new` within an existing Git
-repository; you can override this behavior by using `cargo new --vcs=git`.
+მან ასევე მოახდინა ახალი Git რეპოზიტორიის ინიციალიზაცია _.gitignore_ ფაილთან ერთად. Git ფაილები არ დაგენერირდება, თუ `cargo new`-ს გაუშვებთ არსებულ Git რეპოზიტორიაში; ამ ქცევის შეცვლა შეგიძლიათ `cargo new --vcs=git` ბრძანების გამოყენებით.
 
-> Note: Git is a common version control system. You can change `cargo new` to
-> use a different version control system or no version control system by using
-> the `--vcs` flag. Run `cargo new --help` to see the available options.
+> შენიშვნა: Git არის ვერსიების კონტროლის გავრცელებული სისტემა (version control system). შეგიძლიათ შეცვალოთ `cargo new`, რათა გამოიყენოს ვერსიების კონტროლის განსხვავებული სისტემა ან საერთოდ არ გამოიყენოს ის `--vcs` დროშის გამოყენებით. ხელმისაწვდომი ოფციების სანახავად გაუშვით `cargo new --help`.
 
-Open _Cargo.toml_ in your text editor of choice. It should look similar to the
-code in Listing 1-2.
+გახსენით _Cargo.toml_ თქვენს რჩეულ ტექსტურ რედაქტორში. ის უნდა წააგავდეს 1-2 ლისტინგში ნაჩვენებ კოდს.
 
-<Listing number="1-2" file-name="Cargo.toml" caption="Contents of *Cargo.toml* generated by `cargo new`">
+<Listing number="1-2" file-name="Cargo.toml" caption="`cargo new`-ის მიერ გენერირებული *Cargo.toml*-ის შინაარსი">
 
 ```toml
 [package]
@@ -71,25 +44,17 @@ edition = "2024"
 
 </Listing>
 
-This file is in the [_TOML_][toml]<!-- ignore --> (_Tom’s Obvious, Minimal
-Language_) format, which is Cargo’s configuration format.
+ეს ფაილი არის [_TOML_][toml]<!-- ignore --> (_Tom’s Obvious, Minimal Language_) ფორმატში, რაც Cargo-ს კონფიგურაციის ფორმატია.
 
-The first line, `[package]`, is a section heading that indicates that the
-following statements are configuring a package. As we add more information to
-this file, we’ll add other sections.
+პირველი სტრიქონი, `[package]`, არის სექციის სათაური, რომელიც მიუთითებს, რომ მომდევნო ინსტრუქციები აკონფიგურირებს პაკეტს. ამ ფაილში მეტი ინფორმაციის დამატებასთან ერთად, ჩვენ დავამატებთ სხვა სექციებსაც.
 
-The next three lines set the configuration information Cargo needs to compile
-your program: the name, the version, and the edition of Rust to use. We’ll talk
-about the `edition` key in [Appendix E][appendix-e]<!-- ignore -->.
+შემდეგი სამი სტრიქონი ადგენს კონფიგურაციის ინფორმაციას, რომელიც Cargo-ს სჭირდება თქვენი პროგრამის დასაკომპილირებლად: სახელი, ვერსია და Rust-ის გამოცემა (edition), რომელიც უნდა გამოიყენოს. `edition` გასაღების (key) შესახებ ვისაუბრებთ [დანართ E-ში][appendix-e]<!-- ignore -->.
 
-The last line, `[dependencies]`, is the start of a section for you to list any
-of your project’s dependencies. In Rust, packages of code are referred to as
-_crates_. We won’t need any other crates for this project, but we will in the
-first project in Chapter 2, so we’ll use this dependencies section then.
+ბოლო სტრიქონი, `[dependencies]`, არის იმ სექციის დასაწყისი, სადაც შეგიძლიათ ჩამოთვალოთ თქვენი პროექტის ნებისმიერი დამოკიდებულება. Rust-ში კოდის პაკეტებს მოიხსენიებენ როგორც _crate-ებს_. ამ პროექტისთვის სხვა crate-ები არ დაგვჭირდება, მაგრამ დაგვჭირდება მე-2 თავის პირველ პროექტში, ასე რომ დამოკიდებულებების ამ სექციას მაშინ გამოვიყენებთ.
 
-Now open _src/main.rs_ and take a look:
+ახლა გახსენით _src/main.rs_ და გადახედეთ:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">ფაილის სახელი: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -97,28 +62,15 @@ fn main() {
 }
 ```
 
-Cargo has generated a “Hello, world!” program for you, just like the one we
-wrote in Listing 1-1! So far, the differences between our project and the
-project Cargo generated are that Cargo placed the code in the _src_ directory,
-and we have a _Cargo.toml_ configuration file in the top directory.
+Cargo-მ თქვენთვის დააგენერირა “Hello, world!” პროგრამა, ზუსტად ისეთივე, როგორიც 1-1 ლისტინგში დავწერეთ! ჯერჯერობით, განსხვავება ჩვენს პროექტსა და Cargo-ს მიერ დაგენერირებულ პროექტს შორის არის ის, რომ Cargo-მ კოდი განათავსა _src_ დირექტორიაში, ხოლო ძირითად დირექტორიაში გვაქვს _Cargo.toml_ კონფიგურაციის ფაილი.
 
-Cargo expects your source files to live inside the _src_ directory. The
-top-level project directory is just for README files, license information,
-configuration files, and anything else not related to your code. Using Cargo
-helps you organize your projects. There’s a place for everything, and
-everything is in its place.
+Cargo ელის, რომ თქვენი საწყისი ფაილები _src_ დირექტორიაში იცხოვრებენ. პროექტის უმაღლესი დონის დირექტორია განკუთვნილია მხოლოდ README ფაილებისთვის, ლიცენზიის ინფორმაციისთვის, კონფიგურაციის ფაილებისთვის და ყველაფერი სხვისთვის, რაც არ უკავშირდება თქვენს კოდს. Cargo-ს გამოყენება გეხმარებათ თქვენი პროექტების ორგანიზებაში. ყველაფერს აქვს თავისი ადგილი და ყველაფერი თავის ადგილზეა.
 
-If you started a project that doesn’t use Cargo, as we did with the “Hello,
-world!” project, you can convert it to a project that does use Cargo. Move the
-project code into the _src_ directory and create an appropriate _Cargo.toml_
-file. One easy way to get that _Cargo.toml_ file is to run `cargo init`, which
-will create it for you automatically.
+თუ დაიწყეთ პროექტი, რომელიც არ იყენებს Cargo-ს, როგორც ეს გავაკეთეთ “Hello, world!” პროექტის შემთხვევაში, შეგიძლიათ ის გადაიყვანოთ პროექტში, რომელიც იყენებს Cargo-ს. გადაიტანეთ პროექტის კოდი _src_ დირექტორიაში და შექმენით შესაბამისი _Cargo.toml_ ფაილი. _Cargo.toml_ ფაილის მიღების ერთ-ერთი მარტივი გზაა `cargo init`-ის გაშვება, რომელიც მას ავტომატურად შექმნის თქვენთვის.
 
-### Building and Running a Cargo Project
+### Cargo პროექტის Build-ი და გაშვება
 
-Now let’s look at what’s different when we build and run the “Hello, world!”
-program with Cargo! From your _hello_cargo_ directory, build your project by
-entering the following command:
+ახლა ვნახოთ, რა განსხვავდება, როდესაც “Hello, world!” პროგრამის build-ს ვაკეთებთ და ვუშვებთ Cargo-ს მეშვეობით! თქვენი _hello_cargo_ დირექტორიიდან მოახდინეთ პროექტის build-ი შემდეგი ბრძანების შეყვანით:
 
 ```console
 $ cargo build
@@ -126,54 +78,37 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
-This command creates an executable file in _target/debug/hello_cargo_ (or
-_target\debug\hello_cargo.exe_ on Windows) rather than in your current
-directory. Because the default build is a debug build, Cargo puts the binary in
-a directory named _debug_. You can run the executable with this command:
+ეს ბრძანება ქმნის შესრულებად ფაილს _target/debug/hello_cargo_-ში (ან _target\debug\hello_cargo.exe_-ში Windows-ზე) და არა თქვენს მიმდინარე დირექტორიაში. რადგან ნაგულისხმევი build-ი არის debug build-ი, Cargo ბინარულ ფაილს ათავსებს დირექტორიაში სახელად _debug_. შესრულებადი ფაილის გაშვება შეგიძლიათ ამ ბრძანებით:
 
 ```console
 $ ./target/debug/hello_cargo # or .\target\debug\hello_cargo.exe on Windows
 Hello, world!
 ```
 
-If all goes well, `Hello, world!` should print to the terminal. Running `cargo
-build` for the first time also causes Cargo to create a new file at the top
-level: _Cargo.lock_. This file keeps track of the exact versions of
-dependencies in your project. This project doesn’t have dependencies, so the
-file is a bit sparse. You won’t ever need to change this file manually; Cargo
-manages its contents for you.
+თუ ყველაფერი კარგად წავიდა, `Hello, world!` უნდა დაიბეჭდოს ტერმინალში. `cargo build`-ის პირველად გაშვება ასევე აიძულებს Cargo-ს შექმნას ახალი ფაილი უმაღლეს დონეზე: _Cargo.lock_. ეს ფაილი ადევნებს თვალყურს თქვენს პროექტში არსებული დამოკიდებულებების ზუსტ ვერსიებს. ამ პროექტს არ აქვს დამოკიდებულებები, ასე რომ ფაილი ოდნავ ცარიელია. ამ ფაილის ხელით შეცვლა არასოდეს დაგჭირდებათ; Cargo თავად მართავს მის შინაარსს.
 
-We just built a project with `cargo build` and ran it with
-`./target/debug/hello_cargo`, but we can also use `cargo run` to compile the
-code and then run the resultant executable all in one command:
+ჩვენ ახლახან ავაგეთ პროექტი `cargo build`-ით და გავუშვით ის `./target/debug/hello_cargo`-თი, მაგრამ ასევე შეგვიძლია გამოვიყენოთ `cargo run` კოდის დასაკომპილირებლად და შემდეგ მიღებული შესრულებადი ფაილის გასაშვებად ერთ ბრძანებაში:
 
 ```console
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
-     Running `target/debug/hello_cargo`
+      Running `target/debug/hello_cargo`
 Hello, world!
 ```
 
-Using `cargo run` is more convenient than having to remember to run `cargo
-build` and then use the whole path to the binary, so most developers use `cargo
-run`.
+`cargo run`-ის გამოყენება უფრო მოსახერხებელია, ვიდრე იმის დამახსოვრება, რომ გაუშვათ `cargo build` და შემდეგ გამოიყენოთ ბინარული ფაილის სრული გზა, ასე რომ დეველოპერების უმეტესობა იყენებს `cargo run`-ს.
 
-Notice that this time we didn’t see output indicating that Cargo was compiling
-`hello_cargo`. Cargo figured out that the files hadn’t changed, so it didn’t
-rebuild but just ran the binary. If you had modified your source code, Cargo
-would have rebuilt the project before running it, and you would have seen this
-output:
+შეამჩნიეთ, რომ ამჯერად ვერ დავინახეთ გამონატანი, რომელიც მიუთითებდა, რომ Cargo აკომპილირებდა `hello_cargo`-ს. Cargo-მ დაადგინა, რომ ფაილები არ შეცვლილა, ასე რომ მან ხელახლა არ ააგო პროექტი და უბრალოდ გაუშვა ბინარული ფაილი. თქვენი საწყისი კოდი რომ შეგეცვალათ, Cargo ხელახლა ააგებდა პროექტს მის გაშვებამდე და დაინახავდით ამ გამონატანს:
 
 ```console
 $ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
-     Running `target/debug/hello_cargo`
+      Running `target/debug/hello_cargo`
 Hello, world!
 ```
 
-Cargo also provides a command called `cargo check`. This command quickly checks
-your code to make sure it compiles but doesn’t produce an executable:
+Cargo ასევე გვაწვდის ბრძანებას სახელად `cargo check`. ეს ბრძანება სწრაფად ამოწმებს თქვენს კოდს, რათა დარწმუნდეს, რომ ის კომპილირდება, მაგრამ არ აწარმოებს შესრულებად ფაილს:
 
 ```console
 $ cargo check
@@ -181,79 +116,50 @@ $ cargo check
     Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
 ```
 
-Why would you not want an executable? Often, `cargo check` is much faster than
-`cargo build` because it skips the step of producing an executable. If you’re
-continually checking your work while writing the code, using `cargo check` will
-speed up the process of letting you know if your project is still compiling! As
-such, many Rustaceans run `cargo check` periodically as they write their
-program to make sure it compiles. Then, they run `cargo build` when they’re
-ready to use the executable.
+რატომ არ უნდა გინდოდეთ შესრულებადი ფაილი? ხშირად `cargo check` ბევრად სწრაფია, ვიდრე `cargo build`, რადგან ის ტოვებს შესრულებადი ფაილის შექმნის ნაბიჯს. თუ კოდის წერისას მუდმივად ამოწმებთ თქვენს ნამუშევარს, `cargo check`-ის გამოყენება დააჩქარებს პროცესს იმის გასაგებად, კომპილირდება თუ არა თქვენი პროექტი კვლავ! ამდენად, ბევრი Rustacean პერიოდულად აშვებს `cargo check`-ს პროგრამის წერისას, რათა დარწმუნდეს, რომ ის კომპილირდება. შემდეგ კი უშვებენ `cargo build`-ს, როცა მზად არიან შესრულებადი ფაილის გამოსაყენებლად.
 
-Let’s recap what we’ve learned so far about Cargo:
+შევაჯამოთ ის, რაც აქამდე ვისწავლეთ Cargo-ს შესახებ:
 
-- We can create a project using `cargo new`.
-- We can build a project using `cargo build`.
-- We can build and run a project in one step using `cargo run`.
-- We can build a project without producing a binary to check for errors using
-  `cargo check`.
-- Instead of saving the result of the build in the same directory as our code,
-  Cargo stores it in the _target/debug_ directory.
+- შეგვიძლია შევქმნათ პროექტი `cargo new`-ს გამოყენებით.
+- შეგვიძლია ავაგოთ (build) პროექტი `cargo build`-ის გამოყენებით.
+- შეგვიძლია ავაგოთ და გავუშვათ პროექტი ერთ ნაბიჯში `cargo run`-ის გამოყენებით.
+- შეგვიძლია ავაგოთ პროექტი ბინარული ფაილის შექმნის გარეშე შეცდომების შემოწმებისთვის `cargo check`-ის გამოყენებით.
+- იმის ნაცვლად, რომ build-ის შედეგი შეინახოს იმავე დირექტორიაში, სადაც ჩვენი კოდია, Cargo მას ინახავს _target/debug_ დირექტორიაში.
 
-An additional advantage of using Cargo is that the commands are the same no
-matter which operating system you’re working on. So, at this point, we’ll no
-longer provide specific instructions for Linux and macOS versus Windows.
+Cargo-ს გამოყენების დამატებითი უპირატესობა ის არის, რომ ბრძანებები იგივეა, მიუხედავად იმისა, თუ რომელ ოპერაციულ სისტემაზე მუშაობთ. ასე რომ, ამ ეტაპზე, ჩვენ აღარ მოგაწვდით სპეციფიკურ ინსტრუქციებს Linux-ისა და macOS-ისთვის Windows-ის წინააღმდეგ.
 
-### Building for Release
+### Build-ი Release-ისთვის
 
-When your project is finally ready for release, you can use `cargo build
---release` to compile it with optimizations. This command will create an
-executable in _target/release_ instead of _target/debug_. The optimizations
-make your Rust code run faster, but turning them on lengthens the time it takes
-for your program to compile. This is why there are two different profiles: one
-for development, when you want to rebuild quickly and often, and another for
-building the final program you’ll give to a user that won’t be rebuilt
-repeatedly and that will run as fast as possible. If you’re benchmarking your
-code’s running time, be sure to run `cargo build --release` and benchmark with
-the executable in _target/release_.
+როდესაც თქვენი პროექტი საბოლოოდ მზად იქნება გამოშვებისთვის (release), შეგიძლიათ გამოიყენოთ `cargo build --release`, რათა დააკომპილიროთ ის ოპტიმიზაციებით. ეს ბრძანება შექმნის შესრულებად ფაილს _target/release_-ში _target/debug_-ის ნაცვლად. ოპტიმიზაციები აიძულებს თქვენს Rust კოდს უფრო სწრაფად იმუშაოს, თუმცა მათ ჩართვას სჭირდება მეტი დრო პროგრამის დასაკომპილირებლად. სწორედ ამიტომ არსებობს ორი განსხვავებული პროფილი: ერთი დეველოპმენტისთვის, როდესაც გსურთ სწრაფად და ხშირად ხელახლა აგება, ხოლო მეორე საბოლოო პროგრამის ასაგებად, რომელსაც მომხმარებელს მისცემთ, რომელიც ხელახლა არ აიგება განმეორებით და იმოქმედებს რაც შეიძლება სწრაფად. თუ ზომავთ თქვენი კოდის შესრულების დროს (benchmarking), აუცილებლად გაუშვით `cargo build --release` და გაზომეთ _target/release_-ში არსებული შესრულებადი ფაილით.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="cargo-as-convention"></a>
 
-### Leveraging Cargo’s Conventions
+### Cargo-ს სტანდარტების (Conventions) გამოყენება
 
-With simple projects, Cargo doesn’t provide a lot of value over just using
-`rustc`, but it will prove its worth as your programs become more intricate.
-Once programs grow to multiple files or need a dependency, it’s much easier to
-let Cargo coordinate the build.
+მარტივი პროექტების შემთხვევაში Cargo არ იძლევა დიდ უპირატესობას უბრალოდ `rustc`-ს გამოყენებასთან შედარებით, მაგრამ ის დაამტკიცებს თავის ფასს, როდესაც თქვენი პროგრამები უფრო რთული გახდება. როდესაც პროგრამები გაიზრდება რამდენიმე ფაილამდე ან დასჭირდება დამოკიდებულება, ბევრად მარტივია Cargo-ს მისცეთ საშუალება კოორდინაცია გაუწიოს build-ს.
 
-Even though the `hello_cargo` project is simple, it now uses much of the real
-tooling you’ll use in the rest of your Rust career. In fact, to work on any
-existing projects, you can use the following commands to check out the code
-using Git, change to that project’s directory, and build:
+მიუხედავად იმისა, რომ `hello_cargo` პროექტი მარტივია, ის ახლა იყენებს იმ რეალური ინსტრუმენტების დიდ ნაწილს, რომლებსაც გამოიყენებთ თქვენი Rust კარიერის დანარჩენ ნაწილში. ფაქტობრივად, ნებისმიერ არსებულ პროექტზე სამუშაოდ, შეგიძლიათ გამოიყენოთ შემდეგი ბრძანებები კოდის Git-ით ჩამოსატვირთად (checkout), იმ პროექტის დირექტორიაში გადასასვლელად და ასაგებად (build):
 
 ```console
-$ git clone example.org/someproject
-$ cd someproject
-$ cargo build
+git clone example.org/someproject
+cd someproject
+cargo build
 ```
 
-For more information about Cargo, check out [its documentation][cargo].
+Cargo-ს შესახებ დამატებითი ინფორმაციისთვის იხილეთ [მისი დოკუმენტაცია][cargo].
 
-## Summary
+## შეჯამება
 
-You’re already off to a great start on your Rust journey! In this chapter, you
-learned how to:
+თქვენ უკვე შესანიშნავი დასაწყისი გაქვთ Rust-ის მოგზაურობაში! ამ თავში ისწავლეთ როგორ:
 
-- Install the latest stable version of Rust using `rustup`.
-- Update to a newer Rust version.
-- Open locally installed documentation.
-- Write and run a “Hello, world!” program using `rustc` directly.
-- Create and run a new project using the conventions of Cargo.
+- დააინსტალიროთ Rust-ის უახლესი სტაბილური ვერსია `rustup`-ის გამოყენებით.
+- განაახლოთ Rust-ის უფრო ახალ ვერსიაზე.
+- გახსნათ ლოკალურად დაინსტალირებული დოკუმენტაცია.
+- დაწეროთ და გაუშვათ “Hello, world!” პროგრამა უშუალოდ `rustc`-ს გამოყენებით.
+- შექმნათ და გაუშვათ ახალი პროექტი Cargo-ს სტანდარტების (conventions) გამოყენებით.
 
-This is a great time to build a more substantial program to get used to reading
-and writing Rust code. So, in Chapter 2, we’ll build a guessing game program.
-If you would rather start by learning how common programming concepts work in
-Rust, see Chapter 3 and then return to Chapter 2.
+ეს შესანიშნავი დროა უფრო საგრძნობი პროგრამის ასაგებად, რათა შეეჩვიოთ Rust კოდის წაკითხვასა და დაწერას. ასე რომ, მე-2 თავში ჩვენ ავაგებთ რიცხვის გამოცნობის თამაშის პროგრამას. თუ გირჩევნიათ დაიწყოთ იმის სწავლით, თუ როგორ მუშაობს პროგრამირების ზოგადი კონცეფციები Rust-ში, იხილეთ მე-3 თავი და შემდეგ დაუბრუნდით მე-2 თავს.
 
 [installation]: ch01-01-installation.html#installation
 [toml]: https://toml.io
