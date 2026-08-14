@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-9baac4ef.js";
+            window.path_to_searchindex_js = "searchindex-459e5640.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-046faaa7.js"></script>
@@ -1332,49 +1332,29 @@ fn main() {
 <h2 id="შეჯამება-1"><a class="header" href="#შეჯამება-1">შეჯამება</a></h2>
 <p>ეს პროექტი იყო პრაქტიკული გზა Rust-ის მრავალი ახალი კონცეფციის გასაცნობად: <code>let</code>, <code>match</code>, ფუნქციები, გარეგანი crate-ების გამოყენება და მეტი. მომდევნო რამდენიმე თავში თქვენ ისწავლით ამ კონცეფციების შესახებ უფრო დეტალურად. მე-3 თავი დაფარავს კონცეფციებს, რომლებიც პროგრამირების ენების უმეტესობას აქვს, როგორიცაა ცვლადები, მონაცემთა ტიპები და ფუნქციები, და აჩვენებს, თუ როგორ გამოიყენოთ ისინი Rust-ში. მე-4 თავი იკვლევს Ownership-ს — შესაძლებლობას, რომელიც Rust-ს განსხვავებულს ხდის სხვა ენებისგან. მე-5 თავი განიხილავს Struct-ებსა და მეთოდების სინტაქსს, ხოლო მე-6 თავი განმარტავს, თუ როგორ მუშაობს Enum-ები.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="common-programming-concepts"><a class="header" href="#common-programming-concepts">Common Programming Concepts</a></h1>
-<p>This chapter covers concepts that appear in almost every programming language
-and how they work in Rust. Many programming languages have much in common at
-their core. None of the concepts presented in this chapter are unique to Rust,
-but we’ll discuss them in the context of Rust and explain the conventions
-around using them.</p>
-<p>Specifically, you’ll learn about variables, basic types, functions, comments,
-and control flow. These foundations will be in every Rust program, and learning
-them early will give you a strong core to start from.</p>
+<p><a id="common-programming-concepts"></a></p>
+<h1 id="პროგრამირების-ძირითადი-კონცეფციები"><a class="header" href="#პროგრამირების-ძირითადი-კონცეფციები">პროგრამირების ძირითადი კონცეფციები</a></h1>
+<p>ეს თავი ფარავს კონცეფციებს, რომლებიც თითქმის ყველა პროგრამირების ენაში გვხვდება, და განმარტავს, თუ როგორ მუშაობს ისინი Rust-ში. ბევრ პროგრამირების ენას თავის საფუძველში ბევრი რამ აქვს საერთო. ამ თავში წარმოდგენილი არცერთი კონცეფცია არ არის უნიკალური Rust-ისთვის, თუმცა ჩვენ განვიხილავთ მათ Rust-ის კონტექსტში და ავხსნით მათი გამოყენების დამკვიდრებულ წესებს.</p>
+<p>კერძოდ, თქვენ ისწავლით ცვლადების, საბაზისო ტიპების, ფუნქციების, კომენტარებისა და მართვის ნაკადის (control flow) შესახებ. ეს საფუძვლები იქნება ყველა Rust პროგრამაში, და მათი ადრეულ ეტაპზე შესწავლა მოგცემთ მყარ ბაზას დასაწყებად.</p>
 <section class="note" aria-role="note">
-<h4 id="keywords"><a class="header" href="#keywords">Keywords</a></h4>
-<p>The Rust language has a set of <em>keywords</em> that are reserved for use by the
-language only, much as in other languages. Keep in mind that you cannot use
-these words as names of variables or functions. Most of the keywords have
-special meanings, and you’ll be using them to do various tasks in your Rust
-programs; a few have no current functionality associated with them but have
-been reserved for functionality that might be added to Rust in the future. You
-can find the list of the keywords in <a href="#a---საკვანძო-სიტყვები-keywords">Appendix A</a><!-- ignore -->.</p>
+<h4 id="საკვანძო-სიტყვები-keywords"><a class="header" href="#საკვანძო-სიტყვები-keywords">საკვანძო სიტყვები (Keywords)</a></h4>
+<p>Rust-ის ენას აქვს <em>საკვანძო სიტყვების</em> (keywords) ნაკრები, რომლებიც დარეზერვებულია მხოლოდ ენის მიერ გამოსაყენებლად, ისევე როგორც სხვა ენებში. გაითვალისწინეთ, რომ არ შეგიძლიათ ამ სიტყვების გამოყენება ცვლადების ან ფუნქციების სახელებად. საკვანძო სიტყვების უმეტესობას აქვს სპეციალური მნიშვნელობა, და მათ გამოიყენებთ სხვადასხვა ამოცანის შესასრულებლად თქვენს Rust პროგრამებში; რამდენიმე მათგანს ამჟამად არ აქვს ასოცირებული ფუნქციონალი, თუმცა დარეზერვებულია იმ ფუნქციონალისთვის, რომელიც შეიძლება მომავალში დაემატოს Rust-ს. საკვანძო სიტყვების სიას იპოვით <a href="#a---საკვანძო-სიტყვები-keywords">დანართ A-ში</a><!-- ignore -->.</p>
 </section>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="ცვლადები-და-mutability"><a href="#ცვლადები-და-mutability" class="header">ცვლადები და Mutability</a></h1>
-<h2 id="variables-and-mutability"><a class="header" href="#variables-and-mutability">Variables and Mutability</a></h2>
-<p>As mentioned in the <a href="#storing-values-with-variables">“Storing Values with
-Variables”</a><!-- ignore --> section, by default,
-variables are immutable. This is one of many nudges Rust gives you to write
-your code in a way that takes advantage of the safety and easy concurrency that
-Rust offers. However, you still have the option to make your variables mutable.
-Let’s explore how and why Rust encourages you to favor immutability and why
-sometimes you might want to opt out.</p>
-<p>When a variable is immutable, once a value is bound to a name, you can’t change
-that value. To illustrate this, generate a new project called <em>variables</em> in
-your <em>projects</em> directory by using <code>cargo new variables</code>.</p>
-<p>Then, in your new <em>variables</em> directory, open <em>src/main.rs</em> and replace its
-code with the following code, which won’t compile just yet:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<h1 id="ცვლადები-და-mutability-1"><a href="#ცვლადები-და-mutability-1" class="header">ცვლადები და Mutability</a></h1>
+<p><a id="variables-and-mutability"></a></p>
+<h2 id="ცვლადები-და-mutability"><a class="header" href="#ცვლადები-და-mutability">ცვლადები და Mutability</a></h2>
+<p>როგორც <a href="#storing-values-with-variables">“მნიშვნელობების შენახვა ცვლადებით”</a><!-- ignore --> სექციაში აღვნიშნეთ, ნაგულისხმევად, ცვლადები არის immutable (შეუცვლელი). ეს არის Rust-ის მიერ მოცემული მრავალი მითითებიდან ერთ-ერთი, რათა დაწეროთ კოდი ისეთნაირად, რომ ისარგებლოთ იმ უსაფრთხოებითა და მარტივი კონკურენტულობით (concurrency), რომელსაც Rust-ი გთავაზობთ. თუმცა, თქვენ მაინც გაქვთ ოფცია, გახადოთ თქვენი ცვლადები mutable. განვიხილოთ, თუ როგორ და რატომ გირჩევთ Rust-ი უპირატესობა მიანიჭოთ immutability-ს და რატომ შეიძლება ზოგჯერ მოგინდეთ ამაზე უარის თქმა.</p>
+<p>როდესაც ცვლადი არის immutable, მას შემდეგ, რაც მნიშვნელობა დაუკავშირდება სახელს, თქვენ ვერ შეცვლით ამ მნიშვნელობას. ამის ილუსტრირებისთვის, შექმენით ახალი პროექტი სახელად <em>variables</em> თქვენს <em>projects</em> დირექტორიაში <code>cargo new variables</code>-ის გამოყენებით.</p>
+<p>შემდეგ, თქვენს ახალ <em>variables</em> დირექტორიაში გახსენით <em>src/main.rs</em> და შეცვალეთ მისი კოდი შემდეგი კოდით, რომელიც ჯერ ვერ დაკომპილირდება:</p>
+<p><span class="filename">ფაილის სახელი: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">fn main() {
     let x = 5;
     println!("The value of x is: {x}");
     x = 6;
     println!("The value of x is: {x}");
 }</code></pre>
-<p>Save and run the program using <code>cargo run</code>. You should receive an error message
-regarding an immutability error, as shown in this output:</p>
+<p>შეინახეთ და გაუშვით პროგრამა <code>cargo run</code>-ის გამოყენებით. თქვენ უნდა მიიღოთ შეცდომის შეტყობინება immutability შეცდომის შესახებ, როგორც ნაჩვენებია ამ გამონატანში:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
 error[E0384]: cannot assign twice to immutable variable `x`
@@ -1394,36 +1374,19 @@ help: consider making this binding mutable
 For more information about this error, try `rustc --explain E0384`.
 error: could not compile `variables` (bin "variables") due to 1 previous error
 </code></pre>
-<p>This example shows how the compiler helps you find errors in your programs.
-Compiler errors can be frustrating, but really they only mean your program
-isn’t safely doing what you want it to do yet; they do <em>not</em> mean that you’re
-not a good programmer! Experienced Rustaceans still get compiler errors.</p>
-<p>You received the error message <code>cannot assign twice to immutable variable `x`</code> because you tried to assign a second value to the immutable <code>x</code> variable.</p>
-<p>It’s important that we get compile-time errors when we attempt to change a
-value that’s designated as immutable, because this very situation can lead to
-bugs. If one part of our code operates on the assumption that a value will
-never change and another part of our code changes that value, it’s possible
-that the first part of the code won’t do what it was designed to do. The cause
-of this kind of bug can be difficult to track down after the fact, especially
-when the second piece of code changes the value only <em>sometimes</em>. The Rust
-compiler guarantees that when you state that a value won’t change, it really
-won’t change, so you don’t have to keep track of it yourself. Your code is thus
-easier to reason through.</p>
-<p>But mutability can be very useful and can make code more convenient to write.
-Although variables are immutable by default, you can make them mutable by
-adding <code>mut</code> in front of the variable name as you did in <a href="#storing-values-with-variables">Chapter
-2</a><!-- ignore -->. Adding <code>mut</code> also conveys
-intent to future readers of the code by indicating that other parts of the code
-will be changing this variable’s value.</p>
-<p>For example, let’s change <em>src/main.rs</em> to the following:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>ეს მაგალითი აჩვენებს, თუ როგორ გეხმარებათ კომპილატორი პროგრამებში შეცდომების პოვნაში. კომპილატორის შეცდომები შეიძლება იყოს დამთრგუნველი, თუმცა სინამდვილეში ისინი მხოლოდ იმას ნიშნავს, რომ თქვენი პროგრამა ჯერ უსაფრთხოდ არ აკეთებს იმას, რაც გსურთ; ისინი <em>არ</em> ნიშნავს იმას, რომ კარგი პროგრამისტი არ ხართ! გამოცდილი Rustacean-ებიც კი იღებენ კომპილატორის შეცდომებს.</p>
+<p>თქვენ მიიღეთ შეცდომის შეტყობინება <code>cannot assign twice to immutable variable `x`</code>, რადგან სცადეთ მეორე მნიშვნელობის მინიჭება immutable <code>x</code> ცვლადისთვის.</p>
+<p>მნიშვნელოვანია, რომ მივიღოთ კომპილაციის დროის შეცდომები, როდესაც ვცდილობთ შევცვალოთ მნიშვნელობა, რომელიც მითითებულია როგორც immutable, რადგან ამ სიტუაციამ შეიძლება გამოიწვიოს ხარვეზები (bugs). თუ ჩვენი კოდის ერთი ნაწილი იმუშავებს იმ დაშვებით, რომ მნიშვნელობა არასოდეს შეიცვლება, ხოლო კოდის მეორე ნაწილი შეცვლის ამ მნიშვნელობას, შესაძლებელია, რომ კოდის პირველმა ნაწილმა არ გააკეთოს ის, რისთვისაც იყო განკუთვნილი. ამ ტიპის ხარვეზის მიზეზის მიკვლევა შეიძლება რთული იყოს ფაქტის შემდეგ, განსაკუთრებით მაშინ, როდესაც კოდის მეორე ნაწილი მნიშვნელობას ცვლის მხოლოდ <em>ზოგჯერ</em>. Rust-ის კომპილატორი იძლევა გარანტიას, რომ როდესაც აცხადებთ, რომ მნიშვნელობა არ შეიცვლება, ის ნამდვილად არ შეიცვლება, ასე რომ თქვენ არ მოგიწევთ მასზე თვალყურის დევნება თავად. ამრიგად, თქვენი კოდის გააზრება უფრო მარტივია.</p>
+<p>თუმცა mutability შეიძლება იყოს ძალიან სასარგებლო და გახადოს კოდის დაწერა უფრო მოსახერხებელი. თუმცა ცვლადები ნაგულისხმევად immutable-ია, შეგიძლიათ გახადოთ ისინი mutable ცვლადის სახელის წინ <code>mut</code>-ის დამატებით, როგორც ეს გააკეთეთ <a href="#storing-values-with-variables">მე-2 თავში</a><!-- ignore -->. <code>mut</code>-ის დამატება ასევე გადასცემს განზრახვას კოდის მომავალ მკითხველებს იმის მითითებით, რომ კოდის სხვა ნაწილები შეცვლიან ამ ცვლადის მნიშვნელობას.</p>
+<p>მაგალითად, შევცვალოთ <em>src/main.rs</em> შემდეგნაირად:</p>
+<p><span class="filename">ფაილის სახელი: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut x = 5;
     println!("The value of x is: {x}");
     x = 6;
     println!("The value of x is: {x}");
 }</code></pre>
-<p>When we run the program now, we get this:</p>
+<p>როდესაც ახლა ვაშვებთ პროგრამას, ვიღებთ ამას:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
@@ -1431,60 +1394,27 @@ will be changing this variable’s value.</p>
 The value of x is: 5
 The value of x is: 6
 </code></pre>
-<p>We’re allowed to change the value bound to <code>x</code> from <code>5</code> to <code>6</code> when <code>mut</code> is
-used. Ultimately, deciding whether to use mutability or not is up to you and
-depends on what you think is clearest in that particular situation.</p>
+<p>ჩვენ უფლება გვავს შევცვალოთ <code>x</code>-თან დაკავშირებული მნიშვნელობა <code>5</code>-იდან <code>6</code>-მდე, როდესაც გამოიყენება <code>mut</code>. საბოლოო ჯამში, იმის გადაწყვეტა, გამოიყენოთ თუ არა mutability, თქვენზეა დამოკიდებული და იმაზე, თუ რა მიგაჩნიათ უფრო ნათლად იმ კონკრეტულ სიტუაციაში.</p>
 <!-- Old headings. Do not remove or links may break. -->
-<p><a id="constants"></a></p>
-<h3 id="declaring-constants"><a class="header" href="#declaring-constants">Declaring Constants</a></h3>
-<p>Like immutable variables, <em>constants</em> are values that are bound to a name and
-are not allowed to change, but there are a few differences between constants
-and variables.</p>
-<p>First, you aren’t allowed to use <code>mut</code> with constants. Constants aren’t just
-immutable by default—they’re always immutable. You declare constants using the
-<code>const</code> keyword instead of the <code>let</code> keyword, and the type of the value <em>must</em>
-be annotated. We’ll cover types and type annotations in the next section,
-<a href="#data-types">“Data Types”</a><!-- ignore -->, so don’t worry about the details
-right now. Just know that you must always annotate the type.</p>
-<p>Constants can be declared in any scope, including the global scope, which makes
-them useful for values that many parts of code need to know about.</p>
-<p>The last difference is that constants may be set only to a constant expression,
-not the result of a value that could only be computed at runtime.</p>
-<p>Here’s an example of a constant declaration:</p>
+<p><a id="constants"></a>
+<a id="declaring-constants"></a></p>
+<h3 id="კონსტანტების-გამოცხადება-declaring-constants"><a class="header" href="#კონსტანტების-გამოცხადება-declaring-constants">კონსტანტების გამოცხადება (Declaring Constants)</a></h3>
+<p>immutable ცვლადების მსგავსად, <em>კონსტანტები</em> (constants) არის მნიშვნელობები, რომლებიც დაკავშირებულია სახელთან და არ აქვთ შეცვლის უფლება, თუმცა არის რამდენიმე განსხვავება კონსტანტებსა და ცვლადებს შორის.</p>
+<p>პირველი, თქვენ არ გაქვთ უფლება გამოიყენოთ <code>mut</code> კონსტანტებთან. კონსტანტები უბრალოდ ნაგულისხმევად immutable კი არ არის — ისინი ყოველთვის immutable-ია. კონსტანტებს აცხადებთ <code>const</code> საკვანძო სიტყვის გამოყენებით <code>let</code> საკვანძო სიტყვის ნაცვლად, ხოლო მნიშვნელობის ტიპი <em>აუცილებლად</em> უნდა იყოს მითითებული. ტიპებსა და ტიპების მითითებას დავფარავთ მომდევნო სექციაში, <a href="#data-types">“მონაცემთა ტიპები”</a><!-- ignore -->, ასე რომ ნუ იდარდებთ დეტალებზე ახლავე. უბრალოდ იცოდეთ, რომ ყოველთვის უნდა მიუთითოთ ტიპი.</p>
+<p>კონსტანტები შეიძლება გამოცხადდეს ნებისმიერ Scope-ში, მათ შორის გლობალურ Scope-შიც, რაც მათ სასარგებლოს ხდის იმ მნიშვნელობებისთვის, რომელთა შესახებაც კოდის მრავალ ნაწილს სჭირდება ცოდნა.</p>
+<p>ბოლო განსხვავება ის არის, რომ კონსტანტები შეიძლება დაყენდეს მხოლოდ კონსტანტურ გამოსახულებაზე (constant expression) და არა იმ მნიშვნელობის შედეგზე, რომლის გამოთვლა მხოლოდ შესრულების დროში (runtime) იქნება შესაძლებელი.</p>
+<p>აი, კონსტანტის გამოცხადების მაგალითი:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}</span></code></pre>
-<p>The constant’s name is <code>THREE_HOURS_IN_SECONDS</code>, and its value is set to the
-result of multiplying 60 (the number of seconds in a minute) by 60 (the number
-of minutes in an hour) by 3 (the number of hours we want to count in this
-program). Rust’s naming convention for constants is to use all uppercase with
-underscores between words. The compiler is able to evaluate a limited set of
-operations at compile time, which lets us choose to write out this value in a
-way that’s easier to understand and verify, rather than setting this constant
-to the value 10,800. See the <a href="../reference/const_eval.html">Rust Reference’s section on constant
-evaluation</a> for more information on what operations can be used
-when declaring constants.</p>
-<p>Constants are valid for the entire time a program runs, within the scope in
-which they were declared. This property makes constants useful for values in
-your application domain that multiple parts of the program might need to know
-about, such as the maximum number of points any player of a game is allowed to
-earn, or the speed of light.</p>
-<p>Naming hardcoded values used throughout your program as constants is useful in
-conveying the meaning of that value to future maintainers of the code. It also
-helps to have only one place in your code that you would need to change if the
-hardcoded value needed to be updated in the future.</p>
-<h3 id="shadowing"><a class="header" href="#shadowing">Shadowing</a></h3>
-<p>As you saw in the guessing game tutorial in <a href="#comparing-the-guess-to-the-secret-number">Chapter
-2</a><!-- ignore -->, you can declare a
-new variable with the same name as a previous variable. Rustaceans say that the
-first variable is <em>shadowed</em> by the second, which means that the second
-variable is what the compiler will see when you use the name of the variable.
-In effect, the second variable overshadows the first, taking any uses of the
-variable name to itself until either it itself is shadowed or the scope ends.
-We can shadow a variable by using the same variable’s name and repeating the
-use of the <code>let</code> keyword as follows:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>კონსტანტის სახელია <code>THREE_HOURS_IN_SECONDS</code>, ხოლო მისი მნიშვნელობა დაყენებულია 60-ის (წამების რაოდენობა წუთში) 60-ზე (წუთების რაოდენობა საათში) 3-ზე (საათების რაოდენობა, რომლის დათვლაც გვსურს ამ პროგრამაში) გამრავლების შედეგზე. Rust-ის სახელდების სტანდარტი (naming convention) კონსტანტებისთვის არის ყველა დიდი ასოს გამოყენება სიტყვებს შორის ქვედა ტირეებით. კომპილატორს შეუძლია შეაფასოს ოპერაციების შეზღუდული ნაკრები კომპილაციის დროში, რაც საშუალებას გვძლევს ავირჩიოთ ამ მნიშვნელობის დაწერა ისეთი გზით, რომელიც უფრო მარტივი გასაგები და გადასამოწმებელია, ნაცვლად ამ კონსტანტის 10,800 მნიშვნელობაზე დაყენებისა. იხილეთ <a href="../reference/const_eval.html">Rust Reference-ის სექცია კონსტანტების შეფასების შესახებ</a> დამატებითი ინფორმაციისთვის იმ ოპერაციების შესახებ, რომლებიც შეიძლება გამოყენებულ იქნას კონსტანტების გამოცხადებისას.</p>
+<p>კონსტანტები ვალიდურია პროგრამის შესრულების მთელი დროის განმავლობაში იმ Scope-ის შიგნით, სადაც ისინი გამოცხადდა. ეს თვისება კონსტანტებს სასარგებლოს ხდის თქვენი აპლიკაციის დომენში არსებული იმ მნიშვნელობებისთვის, რომელთა შესახებაც პროგრამის მრავალ ნაწილს შეიძლება დასჭირდეს ცოდნა, როგორიცაა თამაშის ნებისმიერი მოთამაშისთვის დასაშვები ქულების მაქსიმალური რაოდენობა ან სინათლის სიჩქარე.</p>
+<p>თქვენს პროგრამაში გამოყენებული ჰარდკოდირებული (hardcoded) მნიშვნელობებისთვის კონსტანტების სახით სახელების დარქმევა სასარგებლოა კოდის მომავალი მომვლელებისთვის ამ მნიშვნელობის შინაარსის გადასაცემად. ის ასევე ეხმარება იმას, რომ კოდში გქონდეთ მხოლოდ ერთი ადგილი, რომლის შეცვლაც დაგჭირდებათ, თუ ჰარდკოდირებული მნიშვნელობა მომავალში განახლებას საჭიროებს.</p>
+<p><a id="shadowing"></a></p>
+<h3 id="shadowing-ი-დაჩრდილვა"><a class="header" href="#shadowing-ი-დაჩრდილვა">Shadowing-ი (დაჩრდილვა)</a></h3>
+<p>როგორც ნახეთ რიცხვის გამოცნობის თამაშის სახელმძღვანელოში <a href="#comparing-the-guess-to-the-secret-number">მე-2 თავში</a><!-- ignore -->, შეგიძლიათ გამოაცხადოთ ახალი ცვლადი წინა ცვლადის იმავე სახელწოდებით. Rustacean-ები ამბობენ, რომ პირველი ცვლადი <em>დაჩრდილულია</em> (shadowed) მეორის მიერ, რაც ნიშნავს, რომ მეორე ცვლადი არის ის, რასაც კომპილატორი დაინახავს, როდესაც იყენებთ ცვლადის სახელს. ფაქტობრივად, მეორე ცვლადი ჩრდილავს პირველს, და იღებს ცვლადის სახელის ნებისმიერ გამოყენებას მანამ, სანამ ის თავად არ დაიჩრდილება ან Scope არ დასრულდება. ჩვენ შეგვიძლია დავჩრდილოთ ცვლადი იმავე ცვლადის სახელის გამოყენებით და <code>let</code> საკვანძო სიტყვის განმეორებით, შემდეგნაირად:</p>
+<p><span class="filename">ფაილის სახელი: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 5;
 
@@ -1497,13 +1427,7 @@ use of the <code>let</code> keyword as follows:</p>
 
     println!("The value of x is: {x}");
 }</code></pre>
-<p>This program first binds <code>x</code> to a value of <code>5</code>. Then, it creates a new variable
-<code>x</code> by repeating <code>let x =</code>, taking the original value and adding <code>1</code> so that
-the value of <code>x</code> is <code>6</code>. Then, within an inner scope created with the curly
-brackets, the third <code>let</code> statement also shadows <code>x</code> and creates a new
-variable, multiplying the previous value by <code>2</code> to give <code>x</code> a value of <code>12</code>.
-When that scope is over, the inner shadowing ends and <code>x</code> returns to being <code>6</code>.
-When we run this program, it will output the following:</p>
+<p>ეს პროგრამა ჯერ აკავშირებს <code>x</code>-ს <code>5</code> მნიშვნელობასთან. შემდეგ ის ქმნის ახალ ცვლადს <code>x</code> <code>let x =</code>-ის განმეორებით, იღებს თავდაპირველ მნიშვნელობას და უმატებს <code>1</code>-ს, ასე რომ <code>x</code>-ის მნიშვნელობა ხდება <code>6</code>. შემდეგ, ფიგურული ფრჩხილებით შექმნილ შიდა Scope-ში, მესამე <code>let</code> ინსტრუქციაც ჩრდილავს <code>x</code>-ს და ქმნის ახალ ცვლადს, ამრავლებს წინა მნიშვნელობას <code>2</code>-ზე, რათა <code>x</code>-ს მისცეს <code>12</code> მნიშვნელობა. როდესაც ეს Scope სრულდება, შიდა shadowing-ი მთავრდება და <code>x</code> უბრუნდება <code>6</code>-ად ყოფნას. როდესაც ამ პროგრამას გავაშვებთ, ის გამოიტანს შემდეგს:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
@@ -1511,30 +1435,18 @@ When we run this program, it will output the following:</p>
 The value of x in the inner scope is: 12
 The value of x is: 6
 </code></pre>
-<p>Shadowing is different from marking a variable as <code>mut</code> because we’ll get a
-compile-time error if we accidentally try to reassign to this variable without
-using the <code>let</code> keyword. By using <code>let</code>, we can perform a few transformations
-on a value but have the variable be immutable after those transformations have
-completed.</p>
-<p>The other difference between <code>mut</code> and shadowing is that because we’re
-effectively creating a new variable when we use the <code>let</code> keyword again, we can
-change the type of the value but reuse the same name. For example, say our
-program asks a user to show how many spaces they want between some text by
-inputting space characters, and then we want to store that input as a number:</p>
+<p>Shadowing-ი განსხვავდება ცვლადის <code>mut</code>-ად აღნიშვნისგან, რადგან მივიღებთ კომპილაციის დროის შეცდომას, თუ შემთხვევით შევეცდებით ამ ცვლადისთვის ხელახლა მინიჭებას <code>let</code> საკვანძო სიტყვის გამოყენების გარეშე. <code>let</code>-ის გამოყენებით, შეგვიძლია შევასრულოთ რამდენიმე გარდაქმნა მნიშვნელობაზე, მაგრამ ცვლადი იყოს immutable ამ გარდაქმნების დასრულების შემდეგ.</p>
+<p>სხვა განსხვავება <code>mut</code>-სა და shadowing-ს შორის არის ის, რომ რადგან ფაქტობრივად ვქმნით ახალ ცვლადს <code>let</code> საკვანძო სიტყვის ხელახლა გამოყენებისას, შეგვიძლია შევცვალოთ მნიშვნელობის ტიპი, თუმცა ხელახლა გამოვიყენოთ იგივე სახელი. მაგალითად, ვთქვათ, ჩვენი პროგრამა სთხოვს მომხმარებელს აჩვენოს, თუ რამდენი დაშორება სურს ტექსტებს შორის დაშორების პერსონაჟების შეყვანით, შემდეგ კი გვსურს ამ შეყვანილი მონაცემის რიცხვად შენახვა:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let spaces = "   ";
     let spaces = spaces.len();
 <span class="boring">}</span></code></pre>
-<p>The first <code>spaces</code> variable is a string type, and the second <code>spaces</code> variable
-is a number type. Shadowing thus spares us from having to come up with
-different names, such as <code>spaces_str</code> and <code>spaces_num</code>; instead, we can reuse
-the simpler <code>spaces</code> name. However, if we try to use <code>mut</code> for this, as shown
-here, we’ll get a compile-time error:</p>
+<p>პირველი <code>spaces</code> ცვლადი არის სტრიქონის ტიპი, ხოლო მეორე <code>spaces</code> ცვლადი არის რიცხვის ტიპი. Shadowing-ი ამრიგად გვზოგავს განსხვავებული სახელების მოფიქრებისგან, როგორიცაა <code>spaces_str</code> და <code>spaces_num</code>; ამის ნაცვლად, შეგვიძლია ხელახლა გამოვიყენოთ უფრო მარტივი <code>spaces</code> სახელი. თუმცა, თუ შევეცდებით ამისთვის <code>mut</code>-ის გამოყენებას, როგორც აქ არის ნაჩვენები, მივიღებთ კომპილაციის დროის შეცდომას:</p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
 </span>    let mut spaces = "   ";
     spaces = spaces.len();
 <span class="boring">}</span></code></pre>
-<p>The error says we’re not allowed to mutate a variable’s type:</p>
+<p>შეცდომა ამბობს, რომ არ გვაქვს ცვლადის ტიპის შეცვლის (mutate) უფლება:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
 error[E0308]: mismatched types
@@ -1548,8 +1460,7 @@ error[E0308]: mismatched types
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `variables` (bin "variables") due to 1 previous error
 </code></pre>
-<p>Now that we’ve explored how variables work, let’s look at more data types they
-can have.</p>
+<p>ახლა, როდესაც გამოვიკვლიეთ, თუ როგორ მუშაობს ცვლადები, განვიხილოთ მეტი მონაცემთა ტიპი, რომლებიც მათ შეიძლება ჰქონდეთ.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="მონაცემთა-ტიპები"><a href="#მონაცემთა-ტიპები" class="header">მონაცემთა ტიპები</a></h1>
 <h2 id="data-types"><a class="header" href="#data-types">Data Types</a></h2>
