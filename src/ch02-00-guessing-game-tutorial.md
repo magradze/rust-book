@@ -1,33 +1,23 @@
-# Programming a Guessing Game
+# რიცხვის გამოცნობის თამაში
 
-Let’s jump into Rust by working through a hands-on project together! This
-chapter introduces you to a few common Rust concepts by showing you how to use
-them in a real program. You’ll learn about `let`, `match`, methods, associated
-functions, external crates, and more! In the following chapters, we’ll explore
-these ideas in more detail. In this chapter, you’ll just practice the
-fundamentals.
+მოდით პირდაპირ დავიწყოთ Rust-ში პრაქტიკულ პროექტზე მუშაობა! ეს თავი გაგაცნობთ Rust-ის რამდენიმე ზოგად კონცეფციას რეალურ პროგრამაში მათი გამოყენების ჩვენებით. თქვენ ისწავლით `let`-ის, `match`-ის, მეთოდების, ასოცირებული ფუნქციების, გარეგანი crate-ების და სხვა საკითხების შესახებ! მომდევნო თავებში ამ იდეებს უფრო დეტალურად განვიხილავთ. ამ თავში კი უბრალოდ ივარჯიშებთ საფუძვლებში.
 
-We’ll implement a classic beginner programming problem: a guessing game. Here’s
-how it works: The program will generate a random integer between 1 and 100. It
-will then prompt the player to enter a guess. After a guess is entered, the
-program will indicate whether the guess is too low or too high. If the guess is
-correct, the game will print a congratulatory message and exit.
+ჩვენ განვახორციელებთ დამწყებთათვის განკუთვნილ კლასიკურ პროგრამირების ამოცანას: რიცხვის გამოცნობის თამაშს. აი, როგორ მუშაობს ის: პროგრამა დააგენერირებს შემთხვევით მთელ რიცხვს 1-დან 100-მდე. შემდეგ ის სთხოვს მოთამაშეს შეიყვანოს ნავარაუდევი რიცხვი. რიცხვის შეყვანის შემდეგ, პროგრამა მიუთითებს, ნავარაუდევი რიცხვი ძალიან დაბალია თუ ძალიან მაღალი. თუ ნავარაუდევი რიცხვი სწორია, თამაში დაბეჭდავს მისალოც შეტყობინებას და დასრულდება.
 
-## Setting Up a New Project
+<a id="setting-up-a-new-project"></a>
 
-To set up a new project, go to the _projects_ directory that you created in
-Chapter 1 and make a new project using Cargo, like so:
+## ახალი პროექტის გამართვა
+
+ახალი პროექტის გასამართად, გადადით _projects_ დირექტორიაში, რომელიც შექმენით პირველ თავში, და შექმენით ახალი პროექტი Cargo-ს გამოყენებით, ასე:
 
 ```console
-$ cargo new guessing_game
-$ cd guessing_game
+cargo new guessing_game
+cd guessing_game
 ```
 
-The first command, `cargo new`, takes the name of the project (`guessing_game`)
-as the first argument. The second command changes to the new project’s
-directory.
+პირველი ბრძანება, `cargo new`, იღებს პროექტის სახელებს (`guessing_game`) პირველ არგუმენტად. მეორე ბრძანება გადადის ახალი პროექტის დირექტორიაში.
 
-Look at the generated _Cargo.toml_ file:
+გადახედეთ დაგენერირებულ _Cargo.toml_ ფაილს:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial
@@ -38,42 +28,37 @@ cargo run > output.txt 2>&1
 cd ../../..
 -->
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">ფაილის სახელი: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/Cargo.toml}}
 ```
 
-As you saw in Chapter 1, `cargo new` generates a “Hello, world!” program for
-you. Check out the _src/main.rs_ file:
+როგორც პირველ თავში ნახეთ, `cargo new` თქვენთვის აგენერირებს “Hello, world!” პროგრამას. შეამოწმეთ _src/main.rs_ ფაილი:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">ფაილის სახელი: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/src/main.rs}}
 ```
 
-Now let’s compile this “Hello, world!” program and run it in the same step
-using the `cargo run` command:
+ახლა დავაკომპილიროთ ეს “Hello, world!” პროგრამა და გავუშვათ ის იმავე ნაბიჯში `cargo run` ბრძანების გამოყენებით:
 
 ```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
 ```
 
-The `run` command comes in handy when you need to rapidly iterate on a project,
-as we’ll do in this game, quickly testing each iteration before moving on to
-the next one.
+`run` ბრძანება ძალიან გამოსადეგია, როდესაც გჭირდებათ პროექტზე სწრაფი იტერაცია, როგორც ამას გავაკეთებთ ამ თამაშში, თითოეული იტერაციის სწრაფად ტესტირებით მომდევნოზე გადასვლამდე.
 
-Reopen the _src/main.rs_ file. You’ll be writing all the code in this file.
+ხელახლა გახსენით _src/main.rs_ ფაილი. თქვენ მთელ კოდს ამ ფაილში დაწერთ.
 
-## Processing a Guess
+<a id="processing-a-guess"></a>
 
-The first part of the guessing game program will ask for user input, process
-that input, and check that the input is in the expected form. To start, we’ll
-allow the player to input a guess. Enter the code in Listing 2-1 into
-_src/main.rs_.
+## ნავარაუდევი რიცხვის დამუშავება
 
-<Listing number="2-1" file-name="src/main.rs" caption="Code that gets a guess from the user and prints it">
+რიცხვის გამოცნობის თამაშის პირველი ნაწილი მოითხოვს მომხმარებლის შეყვანილ მონაცემებს (input), დაამუშავებს ამ მონაცემებს და შეამოწმებს, არის თუ არა შეყვანილი მონაცემები მოსალოდნელ ფორმატში. დასაწყისისთვის, მოთამაშეს მივცემთ საშუალებას შეიყვანოს ნავარაუდევი რიცხვი. შეიყვანეთ კოდი 2-1 ლისტინგიდან _src/main.rs_-ში.
+
+<Listing number="2-1" file-name="src/main.rs" caption="კოდი, რომელიც იღებს ნავარაუდევ რიცხვს მომხმარებლისგან და ბეჭდავს მას">
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
@@ -81,208 +66,129 @@ _src/main.rs_.
 
 </Listing>
 
-This code contains a lot of information, so let’s go over it line by line. To
-obtain user input and then print the result as output, we need to bring the
-`io` input/output library into scope. The `io` library comes from the standard
-library, known as `std`:
+ეს კოდი შეიცავს ბევრ ინფორმაციას, ასე რომ განვიხილოთ ის სტრიქონ-სტრიქონ. მომხმარებლის შეყვანილი მონაცემების მისაღებად და შემდეგ შედეგის გამონატანის სახით დასაბეჭდად, ჩვენ გვაქვს საჭიროება შემოვიტანოთ `io` შეყვანა/გამოყვანის (input/output) ბიბლიოთეკა Scope-ში. `io` ბიბლიოთეკა მოდის სტანდარტული ბიბლიოთეკიდან, რომელიც ცნობილია როგორც `std`:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:io}}
 ```
 
-By default, Rust has a set of items defined in the standard library that it
-brings into the scope of every program. This set is called the _prelude_, and
-you can see everything in it [in the standard library documentation][prelude].
+ნაგულისხმევად, Rust-ს აქვს ელემენტების ნაკრები განსაზღვრული სტანდარტულ ბიბლიოთეკაში, რომელიც შემოაქვს თითოეული პროგრამის Scope-ში. ამ ნაკრებს ეწოდება _prelude_, და შეგიძლიათ ნახოთ ყველაფერი მასში [სტანდარტული ბიბლიოთეკის დოკუმენტაციაში][prelude].
 
-If a type you want to use isn’t in the prelude, you have to bring that type
-into scope explicitly with a `use` statement. Using the `std::io` library
-provides you with a number of useful features, including the ability to accept
-user input.
+თუ ტიპი, რომლის გამოყენებაც გსურთ, არ არის prelude-ში, ეს ტიპი მკაფიოდ უნდა შემოიტანოთ Scope-ში `use` ინსტრუქციით. `std::io` ბიბლიოთეკის გამოყენება გთავაზობთ მრავალ სასარგებლო შესაძლებლობას, მათ შორის მომხმარებლის შეყვანილი მონაცემების მიღების უნარს.
 
-As you saw in Chapter 1, the `main` function is the entry point into the
-program:
+როგორც პირველ თავში ნახეთ, `main` ფუნქცია არის პროგრამაში შესვლის წერტილი (entry point):
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
 ```
 
-The `fn` syntax declares a new function; the parentheses, `()`, indicate there
-are no parameters; and the curly bracket, `{`, starts the body of the function.
+`fn` სინტაქსი აცხადებს ახალ ფუნქციას; ფრჩხილები, `()`, მიუთითებს, რომ პარამეტრები არ არის; ხოლო ფიგურული ფრჩხილი, `{`, იწყებს ფუნქციის ტანს.
 
-As you also learned in Chapter 1, `println!` is a macro that prints a string to
-the screen:
+როგორც ასევე ისწავლეთ პირველ თავში, `println!` არის მაკროსი, რომელიც ბეჭდავს სტრიქონს ეკრანზე:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print}}
 ```
 
-This code is printing a prompt stating what the game is and requesting input
-from the user.
+ეს კოდი ბეჭდავს შეტყობინებას, სადაც ნათქვამია, თუ რა არის თამაში, და ითხოვს მონაცემების შეყვანას მომხმარებლისგან.
 
-### Storing Values with Variables
+<a id="storing-values-with-variables"></a>
 
-Next, we’ll create a _variable_ to store the user input, like this:
+### მნიშვნელობების შენახვა ცვლადებით
+
+შემდეგ, შევქმნით _ცვლადს_ მომხმარებლის შეყვანილი მონაცემების შესანახად, ასე:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:string}}
 ```
 
-Now the program is getting interesting! There’s a lot going on in this little
-line. We use the `let` statement to create the variable. Here’s another example:
+ახლა პროგრამა საინტერესო ხდება! ამ პატარა სტრიქონში ბევრი რამ ხდება. ცვლადის შესაქმნელად ვიყენებთ `let` ინსტრუქციას. აი კიდევ ერთი მაგალითი:
 
 ```rust,ignore
 let apples = 5;
 ```
 
-This line creates a new variable named `apples` and binds it to the value `5`.
-In Rust, variables are immutable by default, meaning once we give the variable
-a value, the value won’t change. We’ll be discussing this concept in detail in
-the [“Variables and Mutability”][variables-and-mutability]<!-- ignore -->
-section in Chapter 3. To make a variable mutable, we add `mut` before the
-variable name:
+ეს სტრიქონი ქმნის ახალ ცვლადს სახელად `apples` და აკავშირებს მას `5` მნიშვნელობასთან. Rust-ში ცვლადები ნაგულისხმევად არის immutable (შეუცვლელი), რაც ნიშნავს, რომ მას შემდეგ, რაც ცვლადს მივცემთ მნიშვნელობას, ეს მნიშვნელობა არ შეიცვლება. ამ კონცეფციას დეტალურად განვიხილავთ [“ცვლადები და Mutability”][variables-and-mutability]<!-- ignore --> სექციაში მე-3 თავში. ცვლადის mutable (ცვლადი) გახდომისთვის, ცვლადის სახელის წინ ვამატებთ `mut`-ს:
 
 ```rust,ignore
 let apples = 5; // immutable
 let mut bananas = 5; // mutable
 ```
 
-> Note: The `//` syntax starts a comment that continues until the end of the
-> line. Rust ignores everything in comments. We’ll discuss comments in more
-> detail in [Chapter 3][comments]<!-- ignore -->.
+> შენიშვნა: `//` სინტაქსი იწყებს კომენტარს, რომელიც გრძელდება სტრიქონის ბოლომდე. Rust-ი იგნორირებას უკეთებს ყველაფერს კომენტარებში. კომენტარებს უფრო დეტალურად განვიხილავთ [მე-3 თავში][comments]<!-- ignore -->.
 
-Returning to the guessing game program, you now know that `let mut guess` will
-introduce a mutable variable named `guess`. The equal sign (`=`) tells Rust we
-want to bind something to the variable now. On the right of the equal sign is
-the value that `guess` is bound to, which is the result of calling
-`String::new`, a function that returns a new instance of a `String`.
-[`String`][string]<!-- ignore --> is a string type provided by the standard
-library that is a growable, UTF-8 encoded bit of text.
+დავუბრუნდეთ რიცხვის გამოცნობის თამაშის პროგრამას. ახლა უკვე იცით, რომ `let mut guess` შემოიტანს mutable ცვლადს სახელად `guess`. ტოლობის ნიშანი (`=`) ეუბნება Rust-ს, რომ ახლა გვსურს რაღაცის დაკავშირება ცვლადთან. ტოლობის ნიშნის მარჯვნივ არის მნიშვნელობა, რომელთანაც დაკავშირებულია `guess`, რაც არის `String::new`-ის გამოძახების შედეგი — ფუნქციისა, რომელიც აბრუნებს `String`-ის ახალ ინსტანციას. [`String`][string]<!-- ignore --> არის სტანდარტული ბიბლიოთეკის მიერ მოწოდებული სტრიქონის ტიპი, რომელიც წარმოადგენს გაფართოებად, UTF-8 კოდირებულ ტექსტს.
 
-The `::` syntax in the `::new` line indicates that `new` is an associated
-function of the `String` type. An _associated function_ is a function that’s
-implemented on a type, in this case `String`. This `new` function creates a
-new, empty string. You’ll find a `new` function on many types because it’s a
-common name for a function that makes a new value of some kind.
+`::` სინტაქსი `::new` სტრიქონში მიუთითებს, რომ `new` არის `String` ტიპის ასოცირებული ფუნქცია (associated function). _ასოცირებული ფუნქცია_ არის ფუნქცია, რომელიც იმპლემენტირებულია ტიპზე, ამ შემთხვევაში `String`-ზე. ეს `new` ფუნქცია ქმნის ახალ, ცარიელ სტრიქონს. `new` ფუნქციას შეხვდებით მრავალ ტიპზე, რადგან ეს არის გავრცელებული სახელი ფუნქციისთვის, რომელიც ქმნის რაიმე სახის ახალ მნიშვნელობას.
 
-In full, the `let mut guess = String::new();` line has created a mutable
-variable that is currently bound to a new, empty instance of a `String`. Whew!
+სრულად, `let mut guess = String::new();` სტრიქონმა შექმნა mutable ცვლადი, რომელიც ამჟამად დაკავშირებულია `String`-ის ახალ, ცარიელ ინსტანციასთან.
 
-### Receiving User Input
+<a id="receiving-user-input"></a>
 
-Recall that we included the input/output functionality from the standard
-library with `use std::io;` on the first line of the program. Now we’ll call
-the `stdin` function from the `io` module, which will allow us to handle user
-input:
+### მომხმარებლის შეყვანილი მონაცემების მიღება
+
+გახსოვდეთ, რომ სტანდარტული ბიბლიოთეკიდან შეყვანა/გამოყვანის ფუნქციონალი შემოვიტანეთ `use std::io;`-ით პროგრამის პირველ სტრიქონზე. ახლა გამოვიძახებთ `stdin` ფუნქციას `io` მოდულიდან, რაც საშუალებას მოგვცემს დავამუშაოთ მომხმარებლის შეყვანილი მონაცემები:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:read}}
 ```
 
-If we hadn’t imported the `io` module with `use std::io;` at the beginning of
-the program, we could still use the function by writing this function call as
-`std::io::stdin`. The `stdin` function returns an instance of
-[`std::io::Stdin`][iostdin]<!-- ignore -->, which is a type that represents a
-handle to the standard input for your terminal.
+პროგრამის დასაწყისში `io` მოდული `use std::io;`-ით რომ არ შემოგვეტანა, მაინც შეგვეძლო ფუნქციის გამოყენება ამ ფუნქციის გამოძახების ჩწერით როგორც `std::io::stdin`. `stdin` ფუნქცია აბრუნებს [`std::io::Stdin`][iostdin]<!-- ignore -->-ის ინსტანციას — ტიპს, რომელიც წარმოადგენს სახელურს (handle) თქვენი ტერმინალის სტანდარტულ შეყვანაზე (standard input).
 
-Next, the line `.read_line(&mut guess)` calls the [`read_line`][read_line]<!--
-ignore --> method on the standard input handle to get input from the user.
-We’re also passing `&mut guess` as the argument to `read_line` to tell it what
-string to store the user input in. The full job of `read_line` is to take
-whatever the user types into standard input and append that into a string
-(without overwriting its contents), so we therefore pass that string as an
-argument. The string argument needs to be mutable so that the method can change
-the string’s content.
+შემდეგ, სტრიქონი `.read_line(&mut guess)` იძახებს [`read_line`][read_line]<!-- ignore --> მეთოდს სტანდარტული შეყვანის სახელურზე მომხმარებლისგან მონაცემების მისაღებად. ჩვენ ასევე გადავცემთ `&mut guess`-ს არგუმენტად `read_line`-ს, რათა ავუხსნათ, რომელ სტრიქონში შეინახოს მომხმარებლის შეყვანილი მონაცემები. `read_line`-ის სრული ამოცანაა აიღოს ყველაფერი, რასაც მომხმარებელი აკრეფს სტანდარტულ შეყვანაში და მიაწეროს ის სტრიქონს (მისი შინაარსის გადაწერის გარეშე), ასე რომ, ჩვენ ამ სტრიქონს გადავცემთ არგუმენტად. სტრიქონის არგუმენტი უნდა იყოს mutable, რათა მეთოდმა შეძლოს სტრიქონის შინაარსის შეცვლა.
 
-The `&` indicates that this argument is a _reference_, which gives you a way to
-let multiple parts of your code access one piece of data without needing to
-copy that data into memory multiple times. References are a complex feature,
-and one of Rust’s major advantages is how safe and easy it is to use
-references. You don’t need to know a lot of those details to finish this
-program. For now, all you need to know is that, like variables, references are
-immutable by default. Hence, you need to write `&mut guess` rather than
-`&guess` to make it mutable. (Chapter 4 will explain references more
-thoroughly.)
+`&` სიმბოლო მიუთითებს, რომ ეს არგუმენტი არის _reference_ (მიმართვა/რეფერენსი), რაც გაძლევთ საშუალებას თქვენი კოდის მრავალ ნაწილს ჰქონდეს წვდომა მონაცემთა ერთ ნაწილთან მეხსიერებაში ამ მონაცემების მრავალჯერ კოპირების საჭიროების გარეშე. Reference-ები რთული შესაძლებლობაა, და Rust-ის ერთ-ერთი მთავარი უპირატესობა ის არის, თუ რამდენად უსაფრთხო და მარტივია reference-ების გამოყენება. ამ პროგრამის დასასრულებლად ბევრი ამ დეტალის ცოდნა არ გჭირდებათ. ახლა მხოლოდ ის უნდა იცოდეთ, რომ ცვლადების მსგავსად, reference-ებიც ნაგულისხმევად immutable-ია. ამდენად, თქვენ უნდა დაწეროთ `&mut guess` და არა `&guess`, რათა ის mutable გახადოთ. (მე-4 თავი reference-ებს უფრო სიღრმისეულად განმარტავს.)
 
 <!-- Old headings. Do not remove or links may break. -->
 
 <a id="handling-potential-failure-with-the-result-type"></a>
+<a id="handling-potential-failure-with-result"></a>
 
-### Handling Potential Failure with `Result`
+### შესაძლო შეცდომის დამუშავება `Result`-ით
 
-We’re still working on this line of code. We’re now discussing a third line of
-text, but note that it’s still part of a single logical line of code. The next
-part is this method:
+ჩვენ კვლავ ვმუშაობთ კოდის ამ სტრიქონზე. ახლა განვიხილავთ ტექსტის მესამე სტრიქონს, თუმცა გაითვალისწინეთ, რომ ის მაინც კოდის ერთი ლოგიკური სტრიქონის ნაწილია. შემდეგი ნაწილი არის ეს მეთოდი:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:expect}}
 ```
 
-We could have written this code as:
+ეს კოდი შეგვეძლო ასეც დაგვეწერა:
 
 ```rust,ignore
 io::stdin().read_line(&mut guess).expect("Failed to read line");
 ```
 
-However, one long line is difficult to read, so it’s best to divide it. It’s
-often wise to introduce a newline and other whitespace to help break up long
-lines when you call a method with the `.method_name()` syntax. Now let’s
-discuss what this line does.
+თუმცა, ერთი გრძელი სტრიქონი ძნელი წასაკითხია, ასე რომ ჯობია ის დავყოთ. ხშირად გონივრულია ახალი სტრიქონისა და დაშორებების შემოტანა გრძელი სტრიქონების დასაშლელად, როდესაც მეთოდს იძახებთ `.method_name()` სინტაქსით. ახლა განვიხილოთ, რას აკეთებს ეს სტრიქონი.
 
-As mentioned earlier, `read_line` puts whatever the user enters into the string
-we pass to it, but it also returns a `Result` value. [`Result`][result]<!--
-ignore --> is an [_enumeration_][enums]<!-- ignore -->, often called an _enum_,
-which is a type that can be in one of multiple possible states. We call each
-possible state a _variant_.
+როგორც ადრე აღვნიშნეთ, `read_line` ათავსებს ყველაფერს, რასაც მომხმარებელი შეიყვანს, იმ სტრიქონში, რომელსაც მას გადავცემთ, მაგრამ ის ასევე აბრუნებს `Result` მნიშვნელობას. [`Result`][result]<!-- ignore --> არის [_enumeration_][enums]<!-- ignore --> (ჩამონათვალი), რომელსაც ხშირად _enum_-ს უწოდებენ — ტიპი, რომელიც შეიძლება იყოს მრავალი შესაძლო მდგომარეობიდან ერთ-ერთში. თითოეულ შესაძლო მდგომარეობას _variant_-ს (ვარიანტს) ვუწოდებთ.
 
-[Chapter 6][enums]<!-- ignore --> will cover enums in more detail. The purpose
-of these `Result` types is to encode error-handling information.
+[მე-6 თავი][enums]<!-- ignore --> დაფარავს enum-ებს უფრო დეტალურად. ამ `Result` ტიპების მიზანია შეცდომების დამუშავების ინფორმაციის კოდირება.
 
-`Result`’s variants are `Ok` and `Err`. The `Ok` variant indicates the
-operation was successful, and it contains the successfully generated value.
-The `Err` variant means the operation failed, and it contains information
-about how or why the operation failed.
+`Result`-ის ვარიანტებია `Ok` და `Err`. `Ok` ვარიანტი მიუთითებს, რომ ოპერაცია წარმატებული იყო, და ის შეიცავს წარმატებით დაგენერირებულ მნიშვნელობას. `Err` ვარიანტი ნიშნავს, რომ ოპერაცია ჩაიშალა, და ის შეიცავს ინფორმაციას იმის შესახებ, თუ როგორ ან რატომ ჩაიშალა ოპერაცია.
 
-Values of the `Result` type, like values of any type, have methods defined on
-them. An instance of `Result` has an [`expect` method][expect]<!-- ignore -->
-that you can call. If this instance of `Result` is an `Err` value, `expect`
-will cause the program to crash and display the message that you passed as an
-argument to `expect`. If the `read_line` method returns an `Err`, it would
-likely be the result of an error coming from the underlying operating system.
-If this instance of `Result` is an `Ok` value, `expect` will take the return
-value that `Ok` is holding and return just that value to you so that you can
-use it. In this case, that value is the number of bytes in the user’s input.
+`Result` ტიპის მნიშვნელობებს, ისევე როგორც ნებისმიერი ტიპის მნიშვნელობებს, მათზე განსაზღვრული მეთოდები აქვთ. `Result`-ის ინსტანციას აქვს [`expect` მეთოდი][expect]<!-- ignore -->, რომლის გამოძახებაც შეგიძლიათ. თუ `Result`-ის ეს ინსტანცია არის `Err` მნიშვნელობა, `expect` გამოიწვევს პროგრამის ავარიულ გათიშვას (crash) და აჩვენებს შეტყობინებას, რომელიც არგუმენტად გადაეცით `expect`-ს. თუ `read_line` მეთოდი აბრუნებს `Err`-ს, ეს სავარაუდოდ იქნება ოპერაციული სისტემიდან მოსული შეცდომის შედეგი. თუ `Result`-ის ეს ინსტანცია არის `Ok` მნიშვნელობა, `expect` აიღებს იმ დაბრუნებულ მნიშვნელობას, რომელსაც `Ok` შეიცავს და დაგიბრუნებთ მხოლოდ ამ მნიშვნელობას, რათა შეძლოთ მისი გამოყენება. ამ შემთხვევაში, ეს მნიშვნელობა არის ბაიტების რაოდენობა მომხმარებლის შეყვანილ მონაცემებში.
 
-If you don’t call `expect`, the program will compile, but you’ll get a warning:
+თუ არ გამოიძახებთ `expect`-ს, პროგრამა დაკომპილირდება, მაგრამ მიიღებთ გაფრთხილებას (warning):
 
 ```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
 ```
 
-Rust warns that you haven’t used the `Result` value returned from `read_line`,
-indicating that the program hasn’t handled a possible error.
+Rust-ი გაფრთხილებთ, რომ არ გამოგიყენებიათ `read_line`-დან დაბრუნებული `Result` მნიშვნელობა, რაც მიუთითებს, რომ პროგრამას არ დაუმუშავებია შესაძლო შეცდომა.
 
-The right way to suppress the warning is to actually write error-handling code,
-but in our case we just want to crash this program when a problem occurs, so we
-can use `expect`. You’ll learn about recovering from errors in [Chapter
-9][recover]<!-- ignore -->.
+გაფრთხილების ჩახშობის სწორი გზაა შეცდომის დამუშავების რეალური კოდის დაწერა, მაგრამ ჩვენს შემთხვევაში უბრალოდ გვსურს პროგრამის გათიშვა პრობლემის წარმოქმნისას, ასე რომ შეგვიძლია გამოვიყენოთ `expect`. შეცდომებისგან აღდგენის შესახებ ისწავლით [მე-9 თავში][recover]<!-- ignore -->.
 
-### Printing Values with `println!` Placeholders
+<a id="printing-values-with-println-placeholders"></a>
 
-Aside from the closing curly bracket, there’s only one more line to discuss in
-the code so far:
+### მნიშვნელობების დაბეჭდვა `println!` Placeholder-ებით
+
+დამხურავი ფიგურული ფრჩხილის გარდა, აქამდე არსებულ კოდში განსახილველი დარჩა მხოლოდ ერთი სტრიქონი:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print_guess}}
 ```
 
-This line prints the string that now contains the user’s input. The `{}` set of
-curly brackets is a placeholder: Think of `{}` as little crab pincers that hold
-a value in place. When printing the value of a variable, the variable name can
-go inside the curly brackets. When printing the result of evaluating an
-expression, place empty curly brackets in the format string, then follow the
-format string with a comma-separated list of expressions to print in each empty
-curly bracket placeholder in the same order. Printing a variable and the result
-of an expression in one call to `println!` would look like this:
+ეს სტრიქონი ბეჭდავს სტრიქონს, რომელიც ახლა შეიცავს მომხმარებლის შეყვანილ მონაცემებს. `{}` ფიგურული ფრჩხილების წყვილი არის placeholder-ი (ადგილის დამკავებელი): წარმოიდგინეთ `{}` როგორც პატარა მარწუხები, რომლებიც იჭერენ მნიშვნელობას თავის ადგილზე. ცვლადის მნიშვნელობის დაბეჭდვისას, ცვლადის სახელი შეიძლება ჩაიწეროს ფიგურული ფრჩხილების შიგნით. გამოსახულების შეფასების შედეგის დაბეჭდვისას, განათავსეთ ცარიელი ფიგურული ფრჩხილები ფორმატის სტრიქონში, შემდეგ ფორმატის სტრიქონს მოაყოლეთ მძიმით გამოყოფილი გამოსახულებების სია თითოეულ ცარიელ ფიგურულ ფრჩხილში დასაბეჭდად იმავე თანმიმდევრობით. ცვლადისა და გამოსახულების შედეგის დაბეჭდვა `println!`-ის ერთ გამოძახებაში ასე გამოყურება:
 
 ```rust
 let x = 5;
@@ -291,11 +197,13 @@ let y = 10;
 println!("x = {x} and y + 2 = {}", y + 2);
 ```
 
-This code would print `x = 5 and y + 2 = 12`.
+ეს კოდი დაბეჭდავს `x = 5 and y + 2 = 12`.
 
-### Testing the First Part
+<a id="testing-the-first-part"></a>
 
-Let’s test the first part of the guessing game. Run it using `cargo run`:
+### პირველი ნაწილის ტესტირება
+
+გამოვცადოთ რიცხვის გამოცნობის თამაშის პირველი ნაწილი. გაუშვით ის `cargo run`-ის გამოყენებით:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-01/
@@ -307,41 +215,30 @@ input 6 -->
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.44s
-     Running `target/debug/guessing_game`
+      Running `target/debug/guessing_game`
 Guess the number!
 Please input your guess.
 6
 You guessed: 6
 ```
 
-At this point, the first part of the game is done: We’re getting input from the
-keyboard and then printing it.
+ამ ეტაპზე, თამაშის პირველი ნაწილი დასრულებულია: ჩვენ ვიღებთ მონაცემებს კლავიატურიდან და შემდეგ ვბეჭდავთ მათ.
 
-## Generating a Secret Number
+<a id="generating-a-secret-number"></a>
 
-Next, we need to generate a secret number that the user will try to guess. The
-secret number should be different every time so that the game is fun to play
-more than once. We’ll use a random number between 1 and 100 so that the game
-isn’t too difficult. Rust doesn’t yet include random number functionality in
-its standard library. However, the Rust team does provide a [`rand`
-crate][randcrate] with said functionality.
+## საიდუმლო რიცხვის გენერირება
+
+შემდეგ, ჩვენ უნდა დავაგენერიროთ საიდუმლო რიცხვი, რომლის გამოცნობასაც მომხმარებელი შეეცდება. საიდუმლო რიცხვი ყოველ ჯერზე განსხვავებული უნდა იყოს, რათა თამაში საინტერესო იყოს ერთზე მეტჯერ სათამაშოდ. გამოვიყენებთ შემთხვევით რიცხვს 1-დან 100-მდე, რათა თამაში არ იყოს ძალიან რთული. Rust-ი თავის სტანდარტულ ბიბლიოთეკაში ჯერ არ მოიცავს შემთხვევითი რიცხვების ფუნქციონალს. თუმცა, Rust-ის გუნდი უზრუნველყოფს [`rand` crate-ს][randcrate] აღნიშნული ფუნქციონალით.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="using-a-crate-to-get-more-functionality"></a>
+<a id="increasing-functionality-with-a-crate"></a>
 
-### Increasing Functionality with a Crate
+### ფუნქციონალის გაზრდა Crate-ით
 
-Remember that a crate is a collection of Rust source code files. The project
-we’ve been building is a binary crate, which is an executable. The `rand` crate
-is a library crate, which contains code that is intended to be used in other
-programs and can’t be executed on its own.
+გახსოვდეთ, რომ crate არის Rust-ის საწყისი კოდის ფაილების კოლექცია. პროექტი, რომელსაც ჩვენ ვაგებთ, არის binary crate (ბინარული crate), რომელიც წარმოადგენს შესრულებად პროგრამას. `rand` crate არის library crate (ბიბლიოთეკის crate), რომელიც შეიცავს კოდს, რომელიც განკუთვნილია სხვა პროგრამებში გამოსაყენებლად და დამოუკიდებლად ვერ შესრულდება.
 
-Cargo’s coordination of external crates is where Cargo really shines. Before we
-can write code that uses `rand`, we need to modify the _Cargo.toml_ file to
-include the `rand` crate as a dependency. Open that file now and add the
-following line to the bottom, beneath the `[dependencies]` section header that
-Cargo created for you. Be sure to specify `rand` exactly as we have here, with
-this version number, or the code examples in this tutorial may not work:
+გარეგანი crate-ების კოორდინაცია არის ის, სადაც Cargo ჭეშმარიტად ბრწყინავს. სანამ დავწერთ კოდს, რომელიც იყენებს `rand`-ს, ჩვენ უნდა შევცვალოთ _Cargo.toml_ ფაილი, რათა შევიყვანოთ `rand` crate დამოკიდებულებად (dependency). გახსენით ეს ფაილი ახლა და დაამატეთ შემდეგი სტრიქონი ბოლოში, `[dependencies]` სექციის სათაურის ქვეშ, რომელიც Cargo-მ შექმნა თქვენთვის. დარწმუნდით, რომ მიუთითეთ `rand` ზუსტად ისე, როგორც აქ გვაქვს, ამ ვერსიის ნომრით, თორემ ამ სახელმძღვანელოს კოდის მაგალითებმა შეიძლება არ იმუშაოს:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -351,30 +248,17 @@ this version number, or the code examples in this tutorial may not work:
 * ch14-03-cargo-workspaces.md
 -->
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">ფაილის სახელი: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:8:}}
 ```
 
-In the _Cargo.toml_ file, everything that follows a header is part of that
-section that continues until another section starts. In `[dependencies]`, you
-tell Cargo which external crates your project depends on and which versions of
-those crates you require. In this case, we specify the `rand` crate with the
-semantic version specifier `0.10.1`. Cargo understands [Semantic
-Versioning][semver]<!-- ignore --> (sometimes called _SemVer_), which is a
-standard for writing version numbers. The specifier `0.10.1` is actually
-shorthand for `^0.10.1`, which means any version that is at least 0.10.1 but
-below 0.11.0.
+_Cargo.toml_ ფაილში ყველაფერი, რაც სათაურს მოჰყვება, არის იმ სექციის ნაწილი, რომელიც გრძელდება მანამ, სანამ სხვა სექცია არ დაიწყება. `[dependencies]`-ში თქვენ ეუბნებით Cargo-ს, თუ რომელ გარეგან crate-ებზეა დამოკიდებული თქვენი პროექტი და ამ crate-ების რომელ ვერსიებს მოითხოვთ. ამ შემთხვევაში, ჩვენ ვუთითებთ `rand` crate-ს სემანტიკური ვერსიის სპეციფიკატორით `0.10.1`. Cargo-ს ესმის [Semantic Versioning][semver]<!-- ignore --> (ზოგჯერ უწოდებენ _SemVer_-ს), რაც არის ვერსიის ნომრების დაწერის სტანდარტი. სპეციფიკატორი `0.10.1` სინამდვილეში არის `^0.10.1`-ის მოკლე ჩანაწერი, რაც ნიშნავს ნებისმიერ ვერსიას, რომელიც არის სულ მცირე 0.10.1, მაგრამ 0.11.0-ზე ნაკლები.
 
-Cargo considers these versions to have public APIs compatible with version
-0.10.1, and this specification ensures that you’ll get the latest patch release
-that will still compile with the code in this chapter. Any version 0.11.0 or
-greater is not guaranteed to have the same API as what the following examples
-use.
+Cargo მიიჩნევს, რომ ამ ვერსიებს აქვთ საჯარო API-ები, რომლებიც თავსებადია 0.10.1 ვერსიასთან, და ეს სპეციფიკაცია უზრუნველყოფს იმას, რომ მიიღებთ უახლეს patch გამოშვებას, რომელიც კვლავ დაკომპილირდება ამ თავის კოდთან. 0.11.0 ან უფრო მაღალ ვერსიას არ აქვს გარანტირებული, რომ ექნება იგივე API, რასაც შემდგომი მაგალითები იყენებენ.
 
-Now, without changing any of the code, let’s build the project, as shown in
-Listing 2-2.
+ახლა, კოდის შეცვლის გარეშე, ავაგოთ პროექტი, როგორც ნაჩვენებია 2-2 ლისტინგში.
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-02/
@@ -382,12 +266,12 @@ rm Cargo.lock
 cargo clean
 cargo build -->
 
-<Listing number="2-2" caption="The output from running `cargo build` after adding the `rand` crate as a dependency">
+<Listing number="2-2" caption="`cargo build`-ის გაშვების გამონატანი `rand` crate-ის დამოკიდებულებად დამატების შემდეგ">
 
 ```console
 $ cargo build
     Updating crates.io index
-     Locking 8 packages to latest Rust 1.96.0 compatible versions
+      Locking 8 packages to latest Rust 1.96.0 compatible versions
   Downloaded rand_core v0.10.1
   Downloaded chacha20 v0.10.1
   Downloaded rand v0.10.1
@@ -404,30 +288,15 @@ $ cargo build
 
 </Listing>
 
-You may see different version numbers (but they will all be compatible with the
-code, thanks to SemVer!) and different lines (depending on the operating
-system), and the lines may be in a different order.
+შეიძლება დაინახოთ ვერსიის განსხვავებული ნომრები (მაგრამ ისინი ყველა თავსებადი იქნება კოდთან SemVer-ის წყალობით!) და განსხვავებული სტრიქონები (ოპერაციული სისტემის მიხედვით), და სტრიქონები შეიძლება იყოს განსხვავებული თანმიმდევრობით.
 
-When we include an external dependency, Cargo fetches the latest versions of
-everything that dependency needs from the _registry_, which is a copy of data
-from [Crates.io][cratesio]. Crates.io is where people in the Rust ecosystem
-post their open source Rust projects for others to use.
+როდესაც შემოგვაქვს გარეგანი დამოკიდებულება, Cargo წამოიღებს ყველაფრის უახლეს ვერსიებს, რაც ამ დამოკიდებულებას სჭირდება _რეესტრიდან_ (registry), რაც არის მონაცემთა ასლი [Crates.io][cratesio]-დან. Crates.io არის ადგილი, სადაც Rust ეკოსისტემის ადამიანები აქვეყნებენ თავიანთ ღია კოდის Rust პროექტებს სხვების გამოსაყენებლად.
 
-After updating the registry, Cargo checks the `[dependencies]` section and
-downloads any crates listed that aren’t already downloaded. In this case,
-although we only listed `rand` as a dependency, Cargo also grabbed other crates
-that `rand` depends on to work. After downloading the crates, Rust compiles
-them and then compiles the project with the dependencies available.
+რეესტრის განახლების შემდეგ, Cargo ამოწმებს `[dependencies]` სექციას და ჩამოტვირთავს ჩამოთვლილ crate-ებს, რომლებიც ჯერ არ არის ჩამოტვირთული. ამ შემთხვევაში, თუმცა ჩვენ მხოლოდ `rand` ჩამოვთვალეთ დამოკიდებულებად, Cargo-მ ასევე წამოიღო სხვა crate-ები, რომლებზეც `rand` არის დამოკიდებული სამუშაოდ. crate-ების ჩამოტვირთვის შემდეგ, Rust-ი აკომპილირებს მათ და შემდეგ აკომპილირებს პროექტს ხელმისაწვდომი დამოკიდებულებებით.
 
-If you immediately run `cargo build` again without making any changes, you
-won’t get any output aside from the `Finished` line. Cargo knows it has already
-downloaded and compiled the dependencies, and you haven’t changed anything
-about them in your _Cargo.toml_ file. Cargo also knows that you haven’t changed
-anything about your code, so it doesn’t recompile that either. With nothing to
-do, it simply exits.
+თუ დაუყოვნებლივ გაუშვებთ `cargo build`-ს ხელახლა ცვლილებების შეტანის გარეშე, ვერ მიიღებთ ვერანაირ გამონატანს `Finished` სტრიქონის გარდა. Cargo-მ იცის, რომ მან უკვე ჩამოტვირთა და დააკომპილირა დამოკიდებულებები, და თქვენ არაფერი შეგიცვლიათ მათ შესახებ თქვენს _Cargo.toml_ ფაილში. Cargo-მ ასევე იცის, რომ არაფერი შეგიცვლიათ თქვენს კოდში, ასე რომ ის არც მას აკომპილირებს ხელახლა. გასაკეთებელი რომ არაფერია, ის უბრალოდ სრულდება.
 
-If you open the _src/main.rs_ file, make a trivial change, and then save it and
-build again, you’ll only see two lines of output:
+თუ გახსნით _src/main.rs_ ფაილს, შეიტანთ მცირე ცვლილებას, შეინახავთ მას და ხელახლა ააგებთ, დაინახავთ გამონატანის მხოლოდ ორ სტრიქონს:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-02/
@@ -435,48 +304,28 @@ touch src/main.rs
 cargo build -->
 
 ```console
-$ cargo build
+$ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
 ```
 
-These lines show that Cargo only updates the build with your tiny change to the
-_src/main.rs_ file. Your dependencies haven’t changed, so Cargo knows it can
-reuse what it has already downloaded and compiled for those.
+ეს სტრიქონები აჩვენებს, რომ Cargo ანახლებს build-ს მხოლოდ თქვენი მცირე ცვლილებით _src/main.rs_ ფაილში. თქვენი დამოკიდებულებები არ შეცვლილა, ასე რომ Cargo-მ იცის, რომ შეუძლია ხელახლა გამოიყენოს ის, რაც უკვე ჩამოტვირთა და დააკომპილირა მათთვის.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="ensuring-reproducible-builds-with-the-cargo-lock-file"></a>
+<a id="ensuring-reproducible-builds"></a>
 
-#### Ensuring Reproducible Builds
+#### აღწარმოებადი Build-ების უზრუნველყოფა
 
-Cargo has a mechanism that ensures that you can rebuild the same artifact every
-time you or anyone else builds your code: Cargo will use only the versions of
-the dependencies you specified until you indicate otherwise. For example, say
-that next week version 0.10.2 of the `rand` crate comes out, and that version
-contains an important bug fix, but it also contains a regression that will
-break your code. To handle this, Rust creates the _Cargo.lock_ file the first
-time you run `cargo build`, so we now have this in the _guessing_game_
-directory.
+Cargo-ს აქვს მექანიზმი, რომელიც უზრუნველყოფს იმას, რომ შეგიძლიათ ხელახლა ააგოთ იგივე არტეფაქტი ყოველ ჯერზე, როდესაც თქვენ ან ვინმე სხვა აგებს თქვენს კოდს: Cargo გამოიყენებს მხოლოდ იმ დამოკიდებულებების ვერსიებს, რომლებიც თქვენ მიუთითეთ, სანამ სხვაგვარად არ მიუთითებთ. მაგალითად, ვთქვათ, რომ მომდევნო კვირაში გამოვა `rand` crate-ის 0.10.2 ვერსია, და ეს ვერსია შეიცავს მნიშვნელოვან შეცდომის გასწორებას (bug fix), მაგრამ ის ასევე შეიცავს რეგრესიას, რომელიც გააფუჭებს თქვენს კოდს. ამის დასამუშავებლად, Rust-ი ქმნის _Cargo.lock_ ფაილს `cargo build`-ის პირველად გაშვებისას, ასე რომ ახლა ეს ფაილი გვაქვს _guessing_game_ დირექტორიაში.
 
-When you build a project for the first time, Cargo figures out all the versions
-of the dependencies that fit the criteria and then writes them to the
-_Cargo.lock_ file. When you build your project in the future, Cargo will see
-that the _Cargo.lock_ file exists and will use the versions specified there
-rather than doing all the work of figuring out versions again. This lets you
-have a reproducible build automatically. In other words, your project will
-remain at 0.10.1 until you explicitly upgrade, thanks to the _Cargo.lock_ file.
-Because the _Cargo.lock_ file is important for reproducible builds, it’s often
-checked into source control with the rest of the code in your project.
+როდესაც პროექტს პირველად აგებთ, Cargo ადგენს დამოკიდებულებების ყველა ვერსიას, რომლებიც შეესაბამება კრიტერიუმებს და შემდეგ წერს მათ _Cargo.lock_ ფაილში. როდესაც პროექტს აგებთ მომავალში, Cargo დაინახავს, რომ _Cargo.lock_ ფაილი არსებობს და გამოიყენებს იქვე მითითებულ ვერსიებს, ნაცვლად იმისა, რომ ხელახლა შეასრულოს ვერსიების დადგენის მთელი სამუშაო. ეს საშუალებას გაძლევთ ავტომატურად გქონდეთ აღწარმოებადი build-ი (reproducible build). სხვა სიტყვებით რომ ვთქვათ, თქვენი პროექტი დარჩება 0.10.1 ვერსიაზე, სანამ მკაფიოდ არ განაახლებთ მას, _Cargo.lock_ ფაილის წყალობით. რადგან _Cargo.lock_ ფაილი მნიშვნელოვანია აღწარმოებადი build-ებისთვის, ის ხშირად შეჰყავთ ვერსიების კონტროლში (source control) თქვენი პროექტის დანარჩენ კოდთან ერთად.
 
-#### Updating a Crate to Get a New Version
+<a id="updating-a-crate-to-get-a-new-version"></a>
 
-When you _do_ want to update a crate, Cargo provides the command `update`,
-which will ignore the _Cargo.lock_ file and figure out all the latest versions
-that fit your specifications in _Cargo.toml_. Cargo will then write those
-versions to the _Cargo.lock_ file. Otherwise, by default, Cargo will only look
-for versions greater than 0.10.1 and less than 0.11.0. If the `rand` crate has
-released the two new versions 0.10.2 and 0.999.0, you would see the following if
-you ran `cargo update`:
+#### Crate-ის განახლება ახალი ვერსიის მისაღებად
+
+როდესაც _ნამდვილად_ გსურთ crate-ის განახლება, Cargo გვაწვდის `update` ბრძანებას, რომელიც იგნორირებას გაუკეთებს _Cargo.lock_ ფაილს და დაადგენს ყველა უახლეს ვერსიას, რომლებიც შეესაბამება თქვენს სპეციფიკაციებს _Cargo.toml_-ში. Cargo შემდეგ ჩაწერს ამ ვერსიებს _Cargo.lock_ ფაილში. წინააღმდეგ შემთხვევაში, ნაგულისხმევად, Cargo მოძებნის მხოლოდ 0.10.1-ზე მეტ და 0.11.0-ზე ნაკლებ ვერსიებს. თუ `rand` crate-ს გამოშვებული ექნება ორი ახალი ვერსია, 0.10.2 და 0.999.0, `cargo update`-ის გაშვებისას დაინახავდით შემდეგს:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-02/
@@ -487,38 +336,28 @@ as a guide to creating the hypothetical output shown here -->
 ```console
 $ cargo update
     Updating crates.io index
-     Locking 1 package to latest Rust 1.96.0 compatible version
+      Locking 1 package to latest Rust 1.96.0 compatible version
     Updating rand v0.10.1 -> v0.10.2 (available: v0.999.0)
 ```
 
-Cargo ignores the 0.999.0 release. At this point, you would also notice a
-change in your _Cargo.lock_ file noting that the version of the `rand` crate
-you are now using is 0.10.2. To use `rand` version 0.999.0 or any version in the
-0.999._x_ series, you’d have to update the _Cargo.toml_ file to look like this
-instead (don’t actually make this change because the following examples assume
-you’re using `rand` 0.10):
+Cargo იგნორირებას უკეთებს 0.999.0 გამოშვებას. ამ ეტაპზე, თქვენ ასევე შეამჩნევდით ცვლილებას თქვენს _Cargo.lock_ ფაილში, სადაც აღნიშნულია, რომ `rand` crate-ის ვერსია, რომელსაც ახლა იყენებთ, არის 0.10.2. `rand`-ის 0.999.0 ვერსიის ან 0.999._x_ სერიის ნებისმიერი ვერსიის გამოსაყენებლად, თქვენ მოგიწევთ განაახლოთ _Cargo.toml_ ფაილი, რათა ის ასე გამოიყურებოდეს (სინამდვილეში ნუ შეიტანთ ამ ცვლილებას, რადგან შემდგომი მაგალითები გულისხმობს, რომ იყენებთ `rand` 0.10-ს):
 
 ```toml
 [dependencies]
 rand = "0.999.0"
 ```
 
-The next time you run `cargo build`, Cargo will update the registry of crates
-available and reevaluate your `rand` requirements according to the new version
-you have specified.
+შემდეგ ჯერზე, როდესაც გაუშვებთ `cargo build`-ს, Cargo განაახლებს ხელმისაწვდომი crate-ების რეესტრს და ხელახლა შეაფასებს თქვენს `rand` მოთხოვნებს თქვენ მიერ მითითებული ახალი ვერსიის შესაბამისად.
 
-There’s a lot more to say about [Cargo][doccargo]<!-- ignore --> and [its
-ecosystem][doccratesio]<!-- ignore -->, which we’ll discuss in Chapter 14, but
-for now, that’s all you need to know. Cargo makes it very easy to reuse
-libraries, so Rustaceans are able to write smaller projects that are assembled
-from a number of packages.
+ბევრი რამ არის სათქმელი [Cargo][doccargo]<!-- ignore -->-სა და [მისი ეკოსისტემის][doccratesio]<!-- ignore --> შესახებ, რასაც განვიხილავთ მე-14 თავში, მაგრამ ჯერჯერობით ეს არის ყველაფერი, რაც უნდა იცოდეთ. Cargo ძალიან მარტივს ხდის ბიბლიოთეკების ხელახლა გამოყენებას, ასე რომ Rustacean-ებს შეუძლიათ დაწერონ უფრო მცირე პროექტები, რომლებიც აწყობილია რამდენიმე პაკეტისგან.
 
-### Generating a Random Number
+<a id="generating-a-random-number"></a>
 
-Let’s start using `rand` to generate a number to guess. The next step is to
-update _src/main.rs_, as shown in Listing 2-3.
+### შემთხვევითი რიცხვის გენერირება
 
-<Listing number="2-3" file-name="src/main.rs" caption="Adding code to generate a random number">
+დავიწყოთ `rand`-ის გამოყენება საიდუმლო რიცხვის დასაგენერირებლად. შემდეგი ნაბიჯია _src/main.rs_-ის განახლება, როგორც ნაჩვენებია 2-3 ლისტინგში.
+
+<Listing number="2-3" file-name="src/main.rs" caption="კოდის დამატება შემთხვევითი რიცხვის დასაგენერირებლად">
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:all}}
@@ -526,36 +365,15 @@ update _src/main.rs_, as shown in Listing 2-3.
 
 </Listing>
 
-First, we add the line `use rand::prelude::*;`. The `prelude` module contains
-the most commonly used parts of the `rand` crate, and `use` makes those items
-available in our program's scope.
+ჯერ ვამატებთ სტრიქონს `use rand::prelude::*;`. `prelude` მოდული შეიცავს `rand` crate-ის ყველაზე ხშირად გამოყენებად ნაწილებს, ხოლო `use` ხდის ამ ელემენტებს ხელმისაწვდომს ჩვენი პროგრამის Scope-ში.
 
-Next, we’re adding two lines in the middle. In the first line, we call the
-`rand::rng` function that gives us the particular random number generator we’re
-going to use: one that is local to the current thread of execution and is
-seeded by the operating system. Then, we call the `random_range` method on the
-random number generator. This method is defined by the `RngExt` trait that is
-part of the `rand::prelude` module that we brought into scope with the `use
-rand::prelude::*;` statement. The `random_range` method takes a range
-expression as an argument and generates a random number in the range. The kind
-of range expression we’re using here takes the form `start..=end` and is
-inclusive on the lower and upper bounds, so we need to specify `1..=100` to
-request a number between 1 and 100.
+შემდეგ, შუაში ვამატებთ ორ სტრიქონს. პირველ სტრიქონში ვეძახით `rand::rng` ფუნქციას, რომელიც გვაძლევს კონკრეტულ შემთხვევითი რიცხვების გენერატორს, რომელსაც გამოვიყენებთ: ისეთს, რომელიც ლოკალურია მიმდინარე ნაკადისთვის (thread) და ინიციალიზებულია ოპერაციული სისტემის მიერ. შემდეგ, ვეძახით `random_range` მეთოდს შემთხვევითი რიცხვების გენერატორზე. ეს მეთოდი განსაზღვრულია `RngExt` Trait-ით, რომელიც არის `rand::prelude` მოდულის ნაწილი, რომელიც შემოვიტანეთ Scope-ში `use rand::prelude::*;` ინსტრუქციით. `random_range` მეთოდი არგუმენტად იღებს დიაპაზონის (range) გამოსახულებას და აგენერირებს შემთხვევით რიცხვს ამ დიაპაზონში. დიაპაზონის გამოსახულების ის სახეობა, რომელსაც აქ ვიყენებთ, იღებს ფორმას `start..=end` და მოიცავს როგორც ქვედა, ასევე ზედა ზღვარს, ასე რომ ჩვენ უნდა მივუთითოთ `1..=100`, რათა მოვითხოვოთ რიცხვი 1-დან 100-მდე.
 
-> Note: You won’t just know what to bring into scope and which methods and
-> functions to call from a crate, so each crate has documentation with
-> instructions for using it. Another neat feature of Cargo is that running the
-> `cargo doc --open` command will build documentation provided by all your
-> dependencies locally and open it in your browser. If you’re interested in
-> other functionality in the `rand` crate, for example, run `cargo doc --open`
-> and click `rand` in the sidebar on the left.
+> შენიშვნა: თქვენ უბრალოდ არ გეცოდინებათ, თუ რა შემოიტანოთ Scope-ში და რომელი მეთოდები და ფუნქციები გამოიძახოთ crate-იდან, ასე რომ თითოეულ crate-ს აქვს დოკუმენტაცია მისი გამოყენების ინსტრუქციებით. Cargo-ს კიდევ ერთი შესანიშნავი შესაძლებლობა ის არის, რომ `cargo doc --open` ბრძანების გაშვება ააგებს ყველა თქვენი დამოკიდებულების მიერ მოწოდებულ დოკუმენტაციას ლოკალურად და გახსნის მას თქვენს ბრაუზერში. მაგალითად, თუ დაინტერესებული ხართ `rand` crate-ის სხვა ფუნქციონალით, გაუშვით `cargo doc --open` და დააწკაპუნეთ `rand`-ზე მარცხენა გვერდითა ზოლში.
 
-The second new line prints the secret number. This is useful while we’re
-developing the program to be able to test it, but we’ll delete it from the
-final version. It’s not much of a game if the program prints the answer as soon
-as it starts!
+მეორე ახალი სტრიქონი ბეჭდავს საიდუმლო რიცხვს. ეს სასარგებლოა პროგრამის შემუშავებისას მისი ტესტირებისთვის, მაგრამ მას წავშლით საბოლოო ვერსიიდან. თამაში არ იქნება საინტერესო, თუ პროგრამა ბეჭდავს პასუხს დაწყებისთანავე!
 
-Try running the program a few times:
+სცადეთ პროგრამის გაშვება რამდენჯერმე:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-03/
@@ -569,7 +387,7 @@ cargo run
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
-     Running `target/debug/guessing_game`
+      Running `target/debug/guessing_game`
 Guess the number!
 The secret number is: 7
 Please input your guess.
@@ -578,7 +396,7 @@ You guessed: 4
 
 $ cargo run
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
-     Running `target/debug/guessing_game`
+      Running `target/debug/guessing_game`
 Guess the number!
 The secret number is: 83
 Please input your guess.
@@ -586,19 +404,15 @@ Please input your guess.
 You guessed: 5
 ```
 
-You should get different random numbers, and they should all be numbers between
-1 and 100. If you get warnings, they are safe to ignore. If you get errors,
-please check that you have `rand = "0.10.1"` in your *Cargo.toml* as future
-versions of `rand` may have a different API, but any version in the `0.10`
-series should work with the code in this chapter.
+თქვენ უნდა მიიღოთ განსხვავებული შემთხვევითი რიცხვები, და ისინი ყველა უნდა იყოს 1-დან 100-მდე. თუ მიიღებთ გაფრთხილებებს, მათი იგნორირება უსაფრთხოა. თუ მიიღებთ შეცდომებს, გთხოვთ შეამოწმოთ, რომ გაქვთ `rand = "0.10.1"` თქვენს _Cargo.toml_-ში, რადგან `rand`-ის მომავალ ვერსიებს შეიძლება ჰქონდეს განსხვავებული API, მაგრამ `0.10` სერიის ნებისმიერი ვერსია იმუშავებს ამ თავის კოდთან.
 
-## Comparing the Guess to the Secret Number
+<a id="comparing-the-guess-to-the-secret-number"></a>
 
-Now that we have user input and a random number, we can compare them. That step
-is shown in Listing 2-4. Note that this code won’t compile just yet, as we will
-explain.
+## ნავარაუდევი რიცხვის შედარება საიდუმლო რიცხვთან
 
-<Listing number="2-4" file-name="src/main.rs" caption="Handling the possible return values of comparing two numbers">
+ახლა, როდესაც გვაქვს მომხმარებლის შეყვანილი მონაცემი და შემთხვევითი რიცხვი, შეგვიძლია შევადაროთ ისინი. ეს ნაბიჯი ნაჩვენებია 2-4 ლისტინგში. გაითვალისწინეთ, რომ ეს კოდი ჯერ ვერ დაკომპილირდება, როგორც ავხსნით.
+
+<Listing number="2-4" file-name="src/main.rs" caption="ორი რიცხვის შედარების შესაძლო დაბრუნებული მნიშვნელობების დამუშავება">
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
@@ -606,44 +420,17 @@ explain.
 
 </Listing>
 
-First, we add another `use` statement, bringing a type called
-`std::cmp::Ordering` into scope from the standard library. The `Ordering` type
-is another enum and has the variants `Less`, `Greater`, and `Equal`. These are
-the three outcomes that are possible when you compare two values.
+ჯერ ვამატებთ სხვა `use` ინსტრუქციას, რომელსაც შემოაქვს ტიპი სახელად `std::cmp::Ordering` Scope-ში სტანდარტული ბიბლიოთეკიდან. `Ordering` ტიპი არის კიდევ ერთი enum და აქვს ვარიანტები `Less`, `Greater` და `Equal`. ეს არის სამი შედეგი, რომლებიც შესაძლებელია ორი მნიშვნელობის შედარებისას.
 
-Then, we add five new lines at the bottom that use the `Ordering` type. The
-`cmp` method compares two values and can be called on anything that can be
-compared. It takes a reference to whatever you want to compare with: Here, it’s
-comparing `guess` to `secret_number`. Then, it returns a variant of the
-`Ordering` enum we brought into scope with the `use` statement. We use a
-[`match`][match]<!-- ignore --> expression to decide what to do next based on
-which variant of `Ordering` was returned from the call to `cmp` with the values
-in `guess` and `secret_number`.
+შემდეგ, ბოლოში ვამატებთ ხუთ ახალ სტრიქონს, რომლებიც იყენებენ `Ordering` ტიპს. `cmp` მეთოდი ადარებს ორ მნიშვნელობას და მისი გამოძახება შესაძლებელია ნებისმიერ რამეზე, რისი შედარებაც შესაძლებელია. ის იღებს reference-ს იმასთან, რასთანაც გსურთ შედარება: აქ ის ადარებს `guess`-ს `secret_number`-თან. შემდეგ ის აბრუნებს `Ordering` enum-ის ვარიანტს, რომელიც შემოვიტანეთ Scope-ში `use` ინსტრუქციით. ვიყენებთ [`match`][match]<!-- ignore --> გამოსახულებას იმის გადასაწყვეტად, თუ რა გავაკეთოთ შემდეგ იმის მიხედვით, თუ `Ordering`-ის რომელი ვარიანტი დაბრუნდა `cmp`-ის გამოძახებიდან `guess`-ისა და `secret_number`-ის მნიშვნელობებით.
 
-A `match` expression is made up of _arms_. An arm consists of a _pattern_ to
-match against, and the code that should be run if the value given to `match`
-fits that arm’s pattern. Rust takes the value given to `match` and looks
-through each arm’s pattern in turn. Patterns and the `match` construct are
-powerful Rust features: They let you express a variety of situations your code
-might encounter, and they make sure you handle them all. These features will be
-covered in detail in Chapter 6 and Chapter 19, respectively.
+`match` გამოსახულება შედგება _arm_-ებისგან (შტოებისგან). Arm-ი შედგება _pattern_-ისგან (შაბლონისგან), რომელსაც უნდა დაემთხვეს, და კოდისგან, რომელიც უნდა გაეშვას, თუ `match`-ისთვის მიცემული მნიშვნელობა ერგება ამ arm-ის pattern-ს. Rust-ი იღებს `match`-ისთვის მიცემულ მნიშვნელობას და თანმიმდევრობით ამოწმებს თითოეული arm-ის pattern-ს. Pattern-ები და `match` კონსტრუქცია Rust-ის მძლავრი შესაძლებლობებია: ისინი საშუალებას გაძლევთ გამოხატოთ სხვადასხვა სიტუაცია, რომელსაც თქვენი კოდი შეიძლება წააწყდეს, და უზრუნველყოფენ, რომ ყველა მათგანი დაამუშაოთ. ეს შესაძლებლობები დეტალურად იქნება დაფარული შესაბამისად მე-6 და მე-19 თავებში.
 
-Let’s walk through an example with the `match` expression we use here. Say that
-the user has guessed 50 and the randomly generated secret number this time is
-38.
+გავიაროთ მაგალითი `match` გამოსახულებით, რომელსაც აქ ვიყენებთ. ვთქვათ, მომხმარებელმა ივარაუდა 50 და ამჯერად შემთხვევით დაგენერირებული საიდუმლო რიცხვი არის 38.
 
-When the code compares 50 to 38, the `cmp` method will return
-`Ordering::Greater` because 50 is greater than 38. The `match` expression gets
-the `Ordering::Greater` value and starts checking each arm’s pattern. It looks
-at the first arm’s pattern, `Ordering::Less`, and sees that the value
-`Ordering::Greater` does not match `Ordering::Less`, so it ignores the code in
-that arm and moves to the next arm. The next arm’s pattern is
-`Ordering::Greater`, which _does_ match `Ordering::Greater`! The associated
-code in that arm will execute and print `Too big!` to the screen. The `match`
-expression ends after the first successful match, so it won’t look at the last
-arm in this scenario.
+როდესაც კოდი ადარებს 50-ს 38-თან, `cmp` მეთოდი დააბრუნებს `Ordering::Greater`-ს, რადგან 50 მეტია 38-ზე. `match` გამოსახულება იღებს `Ordering::Greater` მნიშვნელობას და იწყებს თითოეული arm-ის pattern-ის შემოწმებას. ის უყურებს პირველი arm-ის pattern-ს, `Ordering::Less`, და ხედავს, რომ `Ordering::Greater` მნიშვნელობა არ ემთხვევა `Ordering::Less`-ს, ასე რომ ის იგნორირებას უკეთებს კოდს იმ arm-ში და გადადის შემდგომ arm-ზე. შემდგომი arm-ის pattern არის `Ordering::Greater`, რომელიც _ნამდვილად_ ემთხვევა `Ordering::Greater`-ს! ამ arm-ში ასოცირებული კოდი შესრულდება და ეკრანზე დაბეჭდავს `Too big!`-ს. `match` გამოსახულება სრულდება პირველი წარმატებული დამთხვევის შემდეგ, ასე რომ ის არ ჩახედავს ბოლო arm-ში ამ სცენარში.
 
-However, the code in Listing 2-4 won’t compile yet. Let’s try it:
+თუმცა, კოდი 2-4 ლისტინგში ჯერ ვერ დაკომპილირდება. სცადეთ ის:
 
 <!--
 The error numbers in this output should be that of the code **WITHOUT** the
@@ -654,80 +441,33 @@ anchor or snip comments
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
 ```
 
-The core of the error states that there are _mismatched types_. Rust has a
-strong, static type system. However, it also has type inference. When we wrote
-`let mut guess = String::new()`, Rust was able to infer that `guess` should be
-a `String` and didn’t make us write the type. The `secret_number`, on the other
-hand, is a number type. A few of Rust’s number types can have a value between 1
-and 100: `i32`, a 32-bit number; `u32`, an unsigned 32-bit number; `i64`, a
-64-bit number; as well as others. Unless otherwise specified, Rust defaults to
-an `i32`, which is the type of `secret_number` unless you add type information
-elsewhere that would cause Rust to infer a different numerical type. The reason
-for the error is that Rust cannot compare a string and a number type.
+შეცდომის არსი აცხადებს, რომ არის _mismatched types_ (შეუსაბამო ტიპები). Rust-ს აქვს ძლიერი, სტატიკური ტიპების სისტემა. თუმცა მას ასევე აქვს ტიპების გამოყვანა (type inference). როდესაც დავწერეთ `let mut guess = String::new()`, Rust-მა შეძლო გამოეყვანა, რომ `guess` უნდა ყოფილიყო `String` და არ აიძულა ჩვენთვის ტიპის დაწერა. `secret_number`, მეორე მხრივ, არის რიცხვის ტიპი. Rust-ის რიცხვის რამდენიმე ტიპს შეიძლება ჰქონდეს მნიშვნელობა 1-დან 100-მდე: `i32`, 32-ბიტიანი რიცხვი; `u32`, უნიშნო (unsigned) 32-ბიტიანი რიცხვი; `i64`, 64-ბიტიანი რიცხვი; ასევე სხვა. თუ სხვაგვარად არ არის მითითებული, Rust-ი ნაგულისხმევად იყენებს `i32`-ს, რაც არის `secret_number`-ის ტიპი, თუ სხვაგან არ დაამატებთ ტიპის ინფორმაციას, რაც აიძულებს Rust-ს გამოიყვანოს განსხვავებული რიცხვითი ტიპი. შეცდომის მიზეზი ის არის, რომ Rust-ს არ შეუძლია შეადაროს სტრიქონი და რიცხვის ტიპი.
 
-Ultimately, we want to convert the `String` the program reads as input into a
-number type so that we can compare it numerically to the secret number. We do
-so by adding this line to the `main` function body:
+საბოლოო ჯამში, ჩვენ გვსურს გარდავქმნათ `String`, რომელსაც პროგრამა კითხულობს შეყვანილი მონაცემის სახით, რიცხვის ტიპად, რათა შევძლოთ მისი რიცხობრივად შედარება საიდუმლო რიცხვთან. ამას ვაკეთებთ ამ სტრიქონის დამატებით `main` ფუნქციის ტანში:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">ფაილის სახელი: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
 ```
 
-The line is:
+სტრიქონია:
 
 ```rust,ignore
 let guess: u32 = guess.trim().parse().expect("Please type a number!");
 ```
 
-We create a variable named `guess`. But wait, doesn’t the program already have
-a variable named `guess`? It does, but helpfully Rust allows us to shadow the
-previous value of `guess` with a new one. _Shadowing_ lets us reuse the `guess`
-variable name rather than forcing us to create two unique variables, such as
-`guess_str` and `guess`, for example. We’ll cover this in more detail in
-[Chapter 3][shadowing]<!-- ignore -->, but for now, know that this feature is
-often used when you want to convert a value from one type to another type.
+ჩვენ ვქმნით ცვლადს სახელად `guess`. მაგრამ მოიცა, განა პროგრამას უკვე არ აქვს ცვლადი სახელად `guess`? აქვს, მაგრამ Rust-ი დამხმარედ გაძლევთ საშუალებას დაჩრდილოთ (shadow) `guess`-ის წინა მნიშვნელობა ახლით. _Shadowing_ საშუალებას გვაძლევს ხელახლა გამოვიყენოთ `guess` ცვლადის სახელი, ნაცვლად იმისა, რომ გვაიძულოს ორი უნიკალური ცვლადის შექმნა, როგორიცაა მაგალითად `guess_str` და `guess`. ამას უფრო დეტალურად დავფარავთ [მე-3 თავში][shadowing]<!-- ignore -->, მაგრამ ჯერჯერობით იცოდეთ, რომ ეს შესაძლებლობა ხშირად გამოიყენება, როდესაც გსურთ მნიშვნელობის გარდაქმნა ერთი ტიპიდან მეორე ტიპში.
 
-We bind this new variable to the expression `guess.trim().parse()`. The `guess`
-in the expression refers to the original `guess` variable that contained the
-input as a string. The `trim` method on a `String` instance will eliminate any
-whitespace at the beginning and end, which we must do before we can convert the
-string to a `u32`, which can only contain numerical data. The user must press
-<kbd>enter</kbd> to satisfy `read_line` and input their guess, which adds a
-newline character to the string. For example, if the user types <kbd>5</kbd> and
-presses <kbd>enter</kbd>, `guess` looks like this: `5\n`. The `\n` represents
-“newline.” (On Windows, pressing <kbd>enter</kbd> results in a carriage return
-and a newline, `\r\n`.) The `trim` method eliminates `\n` or `\r\n`, resulting
-in just `5`.
+ჩვენ ვაკავშირებთ ამ ახალ ცვლადს `guess.trim().parse()` გამოსახულებასთან. `guess` გამოსახულებაში მიუთითებს თავდაპირველ `guess` ცვლადზე, რომელიც შეიცავდა შეყვანილ მონაცემს სტრიქონის სახით. `trim` მეთოდი `String` ინსტანციაზე წაშლის ნებისმიერ დაშორებას (whitespace) დასაწყისში და ბოლოში, რაც უნდა გავაკეთოთ სანამ შევძლებთ სტრიქონის გარდაქმნას `u32`-ად, რომელიც მხოლოდ რიცხობრივ მონაცემებს შეიცავს. მომხმარებელმა უნდა დააჭიროს <kbd>enter</kbd>-ს `read_line`-ის დასაკმაყოფილებლად და თავისი ნავარაუდევი რიცხვის შესაყვანად, რაც ამატებს ახალი სტრიქონის პერსონაჟს (newline character) სტრიქონს. მაგალითად, თუ მომხმარებელი აკრეფს <kbd>5</kbd>-ს და დააჭერს <kbd>enter</kbd>-ს, `guess` ასე გამოიყურება: `5\n`. `\n` წარმოადგენს “ახალ სტრიქონს”. (Windows-ზე <kbd>enter</kbd>-ზე დაჭერა იწვევს carriage return-ს და ახალ სტრიქონს, `\r\n`.) `trim` მეთოდი წაშლის `\n`-ს ან `\r\n`-ს, რაც იძლევა მხოლოდ `5`-ს.
 
-The [`parse` method on strings][parse]<!-- ignore --> converts a string to
-another type. Here, we use it to convert from a string to a number. We need to
-tell Rust the exact number type we want by using `let guess: u32`. The colon
-(`:`) after `guess` tells Rust we’ll annotate the variable’s type. Rust has a
-few built-in number types; the `u32` seen here is an unsigned, 32-bit integer.
-It’s a good default choice for a small positive number. You’ll learn about
-other number types in [Chapter 3][integers]<!-- ignore -->.
+[`parse` მეთოდი სტრიქონებზე][parse]<!-- ignore --> გარდაქმნის სტრიქონს სხვა ტიპად. აქ ჩვენ მას ვიყენებთ სტრიქონიდან რიცხვად გარდასაქმნელად. Rust-ს უნდა ვუთხრათ ზუსტი რიცხვის ტიპი, რომელიც გვსურს, `let guess: u32`-ის გამოყენებით. ორწერტილი (`:`) `guess`-ის შემდეგ ეუბნება Rust-ს, რომ ჩვენ მივუთითებთ ცვლადის ტიპს. Rust-ს აქვს რამდენიმე ჩაშენებული რიცხვის ტიპი; აქ ნანახი `u32` არის უნიშნო, 32-ბიტიანი მთელი რიცხვი (integer). ეს არის კარგი ნაგულისხმევი არჩევანი მცირე დადებითი რიცხვისთვის. სხვა რიცხვის ტიპების შესახებ ისწავლით [მე-3 თავში][integers]<!-- ignore -->.
 
-Additionally, the `u32` annotation in this example program and the comparison
-with `secret_number` means Rust will infer that `secret_number` should be a
-`u32` as well. So, now the comparison will be between two values of the same
-type!
+გარდა ამისა, `u32` მითითება ამ მაგალითის პროგრამაში და შედარება `secret_number`-თან ნიშნავს, რომ Rust-ი გამოიყვანს, რომ `secret_number` ასევე უნდა იყოს `u32`. ასე რომ, ახლა შედარება იქნება იმავე ტიპის ორ მნიშვნელობას შორის!
 
-The `parse` method will only work on characters that can logically be converted
-into numbers and so can easily cause errors. If, for example, the string
-contained `A👍%`, there would be no way to convert that to a number. Because it
-might fail, the `parse` method returns a `Result` type, much as the `read_line`
-method does (discussed earlier in [“Handling Potential Failure with
-`Result`”](#handling-potential-failure-with-result)<!-- ignore -->). We’ll treat
-this `Result` the same way by using the `expect` method again. If `parse`
-returns an `Err` `Result` variant because it couldn’t create a number from the
-string, the `expect` call will crash the game and print the message we give it.
-If `parse` can successfully convert the string to a number, it will return the
-`Ok` variant of `Result`, and `expect` will return the number that we want from
-the `Ok` value.
+`parse` მეთოდი იმუშავებს მხოლოდ პერსონაჟებზე, რომლებიც ლოგიკურად შეიძლება გარდაიქმნას რიცხვებად და ასე რომ, მარტივად შეიძლება გამოიწვიოს შეცდომები. თუ, მაგალითად, სტრიქონი შეიცავდა `A👍%`-ს, ამის რიცხვად გარდაქმნის გზა არ იარსებებდა. რადგან ეს შეიძლება ჩაიშალოს, `parse` მეთოდი აბრუნებს `Result` ტიპს, ისევე როგორც `read_line` მეთოდი აკეთებს (განხილულია ადრე [“შესაძლო შეცდომის დამუშავება `Result`-ით”](#handling-potential-failure-with-result)<!-- ignore -->-ში). ამ `Result`-ს დავამუშავებთ იმავე გზით `expect` მეთოდის ხელახლა გამოყენებით. თუ `parse` დააბრუნებს `Err` `Result` ვარიანტს, რადგან მან ვერ შეძლო რიცხვის შექმნა სტრიქონიდან, `expect` გამოძახება გათიშავს თამაშს და დაბეჭდავს შეტყობინებას, რომელსაც მას მივცემთ. თუ `parse`-ს შეუძლია სტრიქონის წარმატებით გარდაქმნა რიცხვად, ის დააბრუნებს `Result`-ის `Ok` ვარიანტს, ხოლო `expect` დააბრუნებს რიცხვს, რომელიც გვსურს `Ok` მნიშვნელობიდან.
 
-Let’s run the program now:
+ახლა გაუშვით პროგრამა:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/
@@ -740,7 +480,7 @@ cargo run
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
-     Running `target/debug/guessing_game`
+      Running `target/debug/guessing_game`
 Guess the number!
 The secret number is: 58
 Please input your guess.
@@ -749,36 +489,25 @@ You guessed: 76
 Too big!
 ```
 
-Nice! Even though spaces were added before the guess, the program still figured
-out that the user guessed 76. Run the program a few times to verify the
-different behavior with different kinds of input: Guess the number correctly,
-guess a number that is too high, and guess a number that is too low.
+მშვენიერია! მიუხედავად იმისა, რომ დაშორებები დაემატა ნავარაუდევი რიცხვის წინ, პროგრამამ მაინც დაადგინა, რომ მომხმარებელმა ივარაუდა 76. გაუშვით პროგრამა რამდენჯერმე, რათა შეამოწმოთ განსხვავებული ქცევა სხვადასხვა სახის შეყვანილ მონაცემებთან: ივარაუდეთ რიცხვი სწორად, ივარაუდეთ რიცხვი, რომელიც ძალიან მაღალია, და ივარაუდეთ რიცხვი, რომელიც ძალიან დაბალია.
 
-We have most of the game working now, but the user can make only one guess.
-Let’s change that by adding a loop!
+ახლა თამაშის უმეტესი ნაწილი მუშაობს, მაგრამ მომხმარებელს შეუძლია მხოლოდ ერთი ვარაუდის გაკეთება. შევცვალოთ ეს ციკლის (loop) დამატებით!
 
-## Allowing Multiple Guesses with Looping
+<a id="allowing-multiple-guesses-with-looping"></a>
 
-The `loop` keyword creates an infinite loop. We’ll add a loop to give users
-more chances at guessing the number:
+## მრავალჯერადი ვარაუდის დაშვება ციკლით (Looping)
 
-<span class="filename">Filename: src/main.rs</span>
+`loop` საკვანძო სიტყვა ქმნის უსასრულო ციკლს. ჩვენ დავამატებთ ციკლს, რათა მომხმარებლებს მივცეთ რიცხვის გამოცნობის მეტი შანსი:
+
+<span class="filename">ფაილის სახელი: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
 ```
 
-As you can see, we’ve moved everything from the guess input prompt onward into
-a loop. Be sure to indent the lines inside the loop another four spaces each
-and run the program again. The program will now ask for another guess forever,
-which actually introduces a new problem. It doesn’t seem like the user can quit!
+როგორც ხედავთ, ჩვენ გადავიტანეთ ყველაფერი შეყვანის მოთხოვნიდან მოყოლებული ციკლში. დარწმუნდით, რომ ციკლის შიგნით არსებული სტრიქონები შეიწიოთ კიდევ ოთხი დაშორებით თითოეული და ხელახლა გაუშვით პროგრამა. პროგრამა ახლა სამუდამოდ მოითხოვს სხვა ვარაუდს, რაც რეალურად ახალ პრობლემას წარმოშობს. არ ჩანს, რომ მომხმარებელს შეუძლია გამოსვლა!
 
-The user could always interrupt the program by using the keyboard shortcut
-<kbd>ctrl</kbd>-<kbd>C</kbd>. But there’s another way to escape this insatiable
-monster, as mentioned in the `parse` discussion in [“Comparing the Guess to the
-Secret Number”](#comparing-the-guess-to-the-secret-number)<!-- ignore -->: If
-the user enters a non-number answer, the program will crash. We can take
-advantage of that to allow the user to quit, as shown here:
+მომხმარებელს ყოველთვის შეეძლო პროგრამის შეწყვეტა კლავიატურის მალსახმობის <kbd>ctrl</kbd>-<kbd>C</kbd> გამოყენებით. მაგრამ არის ამ მონსტრისგან თავის დაღწევის კიდევ ერთი გზა, როგორც აღნიშნულია `parse` განხილვაში [“ნავარაუდევი რიცხვის შედარება საიდუმლო რიცხვთან”](#comparing-the-guess-to-the-secret-number)<!-- ignore -->-ში: თუ მომხმარებელი შეიყვანს არა-რიცხვით პასუხს, პროგრამა გაითიშება. შეგვიძლია ისარგებლოთ ამით, რათა მომხმარებელს მივცეთ გამოსვლის საშუალება, როგორც აქ არის ნაჩვენები:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-04-looping/
@@ -794,7 +523,7 @@ quit
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.23s
-     Running `target/debug/guessing_game`
+      Running `target/debug/guessing_game`
 Guess the number!
 The secret number is: 59
 Please input your guess.
@@ -817,32 +546,29 @@ Please type a number!: ParseIntError { kind: InvalidDigit }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Typing `quit` will quit the game, but as you’ll notice, so will entering any
-other non-number input. This is suboptimal, to say the least; we want the game
-to also stop when the correct number is guessed.
+`quit`-ის აკრეფა თამაშს დაასრულებს, მაგრამ როგორც შეამჩნევდით, ასევე დასრულედება ნებისმიერი სხვა არა-რიცხვითი მონაცემის შეყვანისას. რბილად რომ ვთქვათ ეს არაოპტიმალურია; ჩვენ გვინდა, რომ თამაში შეწყდეს სწორი რიცხვის გამოცნობის შემდეგ.
 
-### Quitting After a Correct Guess
+<a id="quitting-after-a-correct-guess"></a>
 
-Let’s program the game to quit when the user wins by adding a `break` statement:
+### გამოსვლა სწორი გამოცნობის შემდეგ
 
-<span class="filename">Filename: src/main.rs</span>
+დავაპროგრამოთ თამაში ისე, რომ გამოვიდეს, როდესაც მომხმარებელი იგებს, `break` ინსტრუქციის დამატებით:
+
+<span class="filename">ფაილის სახელი: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-05-quitting/src/main.rs:here}}
 ```
 
-Adding the `break` line after `You win!` makes the program exit the loop when
-the user guesses the secret number correctly. Exiting the loop also means
-exiting the program, because the loop is the last part of `main`.
+`break` სტრიქონის დამატება `You win!`-ის შემდეგ აიძულებს პროგრამას გამოვიდეს ციკლიდან, როდესაც მომხმარებელი სწორად გამოიცნობს საიდუმლო რიცხვის. ციკლიდან გამოსვლა ასევე ნიშნავს პროგრამიდან გამოსვლას, რადგან ციკლი არის `main`-ის ბოლო ნაწილი.
 
-### Handling Invalid Input
+<a id="handling-invalid-input"></a>
 
-To further refine the game’s behavior, rather than crashing the program when
-the user inputs a non-number, let’s make the game ignore a non-number so that
-the user can continue guessing. We can do that by altering the line where
-`guess` is converted from a `String` to a `u32`, as shown in Listing 2-5.
+### არავალიდური შეყვანილი მონაცემების დამუშავება
 
-<Listing number="2-5" file-name="src/main.rs" caption="Ignoring a non-number guess and asking for another guess instead of crashing the program">
+თამაშის ქცევის შემდგომი დახვეწისთვის, ნაცვლად პროგრამის გათიშვისა, როდესაც მომხმარებელი შეიყვანს არა-რიცხვს, გავაკეთოთ ისე, რომ თამაშმა იგნორირება გაუკეთოს არა-რიცხვს, რათა მომხმარებელმა შეძლოს გამოცნობის გაგრძელება. ამის გაკეთება შეგვიძლია იმ სტრიქონის შეცვლით, სადაც `guess` გარდაიქმნება `String`-იდან `u32`-ად, როგორც ნაჩვენებია 2-5 ლისტინგში.
+
+<Listing number="2-5" file-name="src/main.rs" caption="არა-რიცხვითი ნავარაუდევი რიცხვის იგნორირება და სხვა ვარაუდის მოთხოვნა პროგრამის გათიშვის ნაცვლად">
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
@@ -850,29 +576,13 @@ the user can continue guessing. We can do that by altering the line where
 
 </Listing>
 
-We switch from an `expect` call to a `match` expression to move from crashing
-on an error to handling the error. Remember that `parse` returns a `Result`
-type and `Result` is an enum that has the variants `Ok` and `Err`. We’re using
-a `match` expression here, as we did with the `Ordering` result of the `cmp`
-method.
+ჩვენ გადავდივართ `expect` გამოძახებიდან `match` გამოსახულებაზე, რათა გადავიდეთ შეცდომისას გათიშვიდან შეცდომის დამუშავებაზე. გახსოვდეთ, რომ `parse` აბრუნებს `Result` ტიპს და `Result` არის enum, რომელსაც აქვს ვარიანტები `Ok` და `Err`. ჩვენ ვიყენებთ `match` გამოსახულებას აქ, როგორც გავაკეთეთ `cmp` მეთოდის `Ordering` შედეგთან.
 
-If `parse` is able to successfully turn the string into a number, it will
-return an `Ok` value that contains the resultant number. That `Ok` value will
-match the first arm’s pattern, and the `match` expression will just return the
-`num` value that `parse` produced and put inside the `Ok` value. That number
-will end up right where we want it in the new `guess` variable we’re creating.
+თუ `parse`-ს შეუძლია სტრიქონის წარმატებით გარდაქმნა რიცხვად, ის დააბრუნებს `Ok` მნიშვნელობას, რომელიც შეიცავს მიღებულ რიცხვს. ეს `Ok` მნიშვნელობა დაემთხვევა პირველი arm-ის pattern-ს, ხოლო `match` გამოსახულება უბრალოდ დააბრუნებს `num` მნიშვნელობას, რომელიც `parse`-მა აწარმოა და განათავსა `Ok` მნიშვნელობის შიგნით. ეს რიცხვი მოხვდება სწორედ იქ, სადაც გვსურს, ახალ `guess` ცვლადში, რომელსაც ვქმნით.
 
-If `parse` is _not_ able to turn the string into a number, it will return an
-`Err` value that contains more information about the error. The `Err` value
-does not match the `Ok(num)` pattern in the first `match` arm, but it does
-match the `Err(_)` pattern in the second arm. The underscore, `_`, is a
-catch-all value; in this example, we’re saying we want to match all `Err`
-values, no matter what information they have inside them. So, the program will
-execute the second arm’s code, `continue`, which tells the program to go to the
-next iteration of the `loop` and ask for another guess. So, effectively, the
-program ignores all errors that `parse` might encounter!
+თუ `parse` _ვერ_ შეძლებს სტრიქონის გარდაქმნას რიცხვად, ის დააბრუნებს `Err` მნიშვნელობას, რომელიც შეიცავს მეტ ინფორმაციას შეცდომის შესახებ. `Err` მნიშვნელობა არ ემთხვევა `Ok(num)` pattern-ს პირველ `match` arm-ში, მაგრამ ის ემთხვევა `Err(_)` pattern-ს მეორე arm-ში. ქვედა ტირე, `_`, არის catch-all (ყველაფრის დამჭერი) მნიშვნელობა; ამ მაგალითში ჩვენ ვამბობთ, რომ გვსურს დავემთხვეთ ყველა `Err` მნიშვნელობას, მიუხედავად იმისა, თუ რა ინფორმაცია აქვთ მათ შიგნით. ასე რომ, პროგრამა შეასრულებს მეორე arm-ის კოდს, `continue`, რაც ეუბნება პროგრამას გადავიდეს `loop`-ის შემდგომ იტერაციაზე და მოითხოვოს სხვა ვარაუდი. ასე რომ, ეფექტურად, პროგრამა იგნორირებას უკეთებს ყველა შეცდომას, რომელსაც `parse` შეიძლება წააწყდეს!
 
-Now everything in the program should work as expected. Let’s try it:
+ახლა ყველაფერი პროგრამაში უნდა მუშაობდეს ისე, როგორც მოსალოდნელია. სცადეთ ის:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-05/
@@ -887,7 +597,7 @@ foo
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
-     Running `target/debug/guessing_game`
+      Running `target/debug/guessing_game`
 Guess the number!
 The secret number is: 61
 Please input your guess.
@@ -906,12 +616,9 @@ You guessed: 61
 You win!
 ```
 
-Awesome! With one tiny final tweak, we will finish the guessing game. Recall
-that the program is still printing the secret number. That worked well for
-testing, but it ruins the game. Let’s delete the `println!` that outputs the
-secret number. Listing 2-6 shows the final code.
+შესანიშნავია! ერთი მცირე საბოლოო შესწორებით, ჩვენ დავასრულებთ რიცხვის გამოცნობის თამაშს. გახსოვდეთ, რომ პროგრამა კვლავ ბეჭდავს საიდუმლო რიცხვს. ეს კარგად მუშაობდა ტესტირებისთვის, მაგრამ ის აფუჭებს თამაშს. წავშალოთ `println!`, რომელიც გამოიტანს საიდუმლო რიცხვს. 2-6 ლისტინგი აჩვენებს საბოლოო კოდს.
 
-<Listing number="2-6" file-name="src/main.rs" caption="Complete guessing game code">
+<Listing number="2-6" file-name="src/main.rs" caption="რიცხვის გამოცნობის თამაშის სრული კოდი">
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-06/src/main.rs}}
@@ -919,17 +626,13 @@ secret number. Listing 2-6 shows the final code.
 
 </Listing>
 
-At this point, you’ve successfully built the guessing game. Congratulations!
+ამ ეტაპზე, თქვენ წარმატებით ააგეთ რიცხვის გამოცნობის თამაში. გილოცავთ!
 
-## Summary
+<a id="summary"></a>
 
-This project was a hands-on way to introduce you to many new Rust concepts:
-`let`, `match`, functions, the use of external crates, and more. In the next
-few chapters, you’ll learn about these concepts in more detail. Chapter 3
-covers concepts that most programming languages have, such as variables, data
-types, and functions, and shows how to use them in Rust. Chapter 4 explores
-ownership, a feature that makes Rust different from other languages. Chapter 5
-discusses structs and method syntax, and Chapter 6 explains how enums work.
+## შეჯამება
+
+ეს პროექტი იყო პრაქტიკული გზა Rust-ის მრავალი ახალი კონცეფციის გასაცნობად: `let`, `match`, ფუნქციები, გარეგანი crate-ების გამოყენება და მეტი. მომდევნო რამდენიმე თავში თქვენ ისწავლით ამ კონცეფციების შესახებ უფრო დეტალურად. მე-3 თავი დაფარავს კონცეფციებს, რომლებიც პროგრამირების ენების უმეტესობას აქვს, როგორიცაა ცვლადები, მონაცემთა ტიპები და ფუნქციები, და აჩვენებს, თუ როგორ გამოიყენოთ ისინი Rust-ში. მე-4 თავი იკვლევს Ownership-ს — შესაძლებლობას, რომელიც Rust-ს განსხვავებულს ხდის სხვა ენებისგან. მე-5 თავი განიხილავს Struct-ებსა და მეთოდების სინტაქსს, ხოლო მე-6 თავი განმარტავს, თუ როგორ მუშაობს Enum-ები.
 
 [prelude]: ../std/prelude/index.html
 [variables-and-mutability]: ch03-01-variables-and-mutability.html#variables-and-mutability
